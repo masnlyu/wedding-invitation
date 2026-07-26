@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>誠摯邀請 - 我們的幸福婚禮</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 1. 個人化歡迎頁面 (Landing Screen) -->
+  <section id="intro-screen" class="screen active">
+    <div class="intro-bg-decorations">
+      <div class="petal-float"></div>
+    </div>
+    <div class="intro-card">
+      <div class="gold-frame">
+        <h2 class="title-en">Save the Date</h2>
+        <h1 class="title-cn">幸福邀請</h1>
+        <div class="divider">
+          <span class="dot"></span>
+          <span class="line"></span>
+          <span class="dot"></span>
+        </div>
+        <p class="intro-text">在這個特別的日子，誠摯期盼您的見證與祝福</p>
+        
+        <div class="input-group">
+          <label for="guest-name">賓客姓名</label>
+          <input type="text" id="guest-name" placeholder="請輸入您的姓名" autocomplete="off" required>
+        </div>
+        
+        <button id="btn-open-invite" class="btn-primary">
+          <span>開啟幸福邀請</span>
+          <div class="btn-glow"></div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 手繪 SVG 動畫頁面 (Animation Screen) -->
+  <section id="animation-screen" class="screen">
+    <div class="animation-container">
+      <div class="romantic-quotes" id="quote-container">
+        <p class="quote-line">遇見你，是故事的開始...</p>
+      </div>
+      
+      <!-- SVG 手繪圖案 -->
+      <svg id="drawing-svg" viewBox="0 0 800 600" width="100%" height="100%">
+        <!-- 定義漸層色 -->
+        <defs>
+          <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#dfba73" />
+            <stop offset="50%" stop-color="#c5a059" />
+            <stop offset="100%" stop-color="#9e7d3b" />
+          </linearGradient>
+          <linearGradient id="rose-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fbc7d4" />
+            <stop offset="100%" stop-color="#9796f0" />
+          </linearGradient>
+        </defs>
+        
+        <!-- 植物藤蔓花圈 (雙側對稱) -->
+        <!-- 左側藤蔓 -->
+        <path class="sketch-path vine" d="M 400,500 C 350,500 250,450 220,350 C 190,250 250,150 350,110 C 370,102 390,100 400,100" />
+        <!-- 右側藤蔓 -->
+        <path class="sketch-path vine" d="M 400,500 C 450,500 550,450 580,350 C 610,250 550,150 450,110 C 430,102 410,100 400,100" />
+        
+        <!-- 葉子與小花瓣 -->
+        <!-- 左側葉子 -->
+        <path class="sketch-path leaf" d="M 270,420 Q 240,430 250,400 Q 280,390 270,420 Z" />
+        <path class="sketch-path leaf" d="M 210,320 Q 180,310 195,290 Q 225,300 210,320 Z" />
+        <path class="sketch-path leaf" d="M 285,180 Q 275,150 295,155 Q 305,185 285,180 Z" />
+        <!-- 右側葉子 -->
+        <path class="sketch-path leaf" d="M 530,420 Q 560,430 550,400 Q 520,390 530,420 Z" />
+        <path class="sketch-path leaf" d="M 590,320 Q 620,310 605,290 Q 575,300 590,320 Z" />
+        <path class="sketch-path leaf" d="M 515,180 Q 525,150 505,155 Q 495,185 515,180 Z" />
+
+        <!-- 頂部交匯處的花朵 -->
+        <path class="sketch-path flower" d="M 400,100 C 390,85 410,85 400,100 C 385,90 385,110 400,100 C 410,115 390,115 400,100 C 415,110 415,90 400,100 Z" />
+        
+        <!-- 中央手繪新人線條 -->
+        <!-- 新郎 (左側) -->
+        <path class="sketch-path couple-groom" d="M 370,205 C 375,195 385,195 390,205 C 392,210 392,215 390,220 C 385,225 375,225 370,220 Z M 370,220 C 365,225 355,235 350,255 L 345,380 M 382,220 C 385,230 388,250 388,380 M 355,260 C 365,275 380,305 392,315" />
+        <!-- 新娘 (右側) -->
+        <path class="sketch-path couple-bride" d="M 430,210 C 425,200 415,200 410,210 C 408,215 408,220 410,225 C 415,230 425,230 430,225 Z M 430,210 C 445,212 455,230 455,380 C 445,380 435,372 425,375 M 418,225 C 415,235 412,250 412,380 M 425,260 C 418,275 408,305 398,315" />
+        <!-- 牽手連接處 -->
+        <path class="sketch-path couple-hands" d="M 392,315 C 394,317 396,317 398,315" />
+        <!-- 漂浮的小心形 (在兩人頭部中間上方) -->
+        <path class="sketch-path couple-heart" d="M 400,185 C 395,178 388,178 388,185 C 388,192 396,198 400,202 C 404,198 412,192 412,185 C 412,178 405,178 400,185 Z" />
+      </svg>
+      
+      <!-- Skip 躍過動畫按鈕 -->
+      <button id="btn-skip-anim" class="btn-text">跳過動畫 &raquo;</button>
+    </div>
+  </section>
+
+  <!-- 3. 喜帖主體展示頁面 (Wedding Invitation Screen) -->
+  <section id="wedding-screen" class="screen">
+    <!-- 飄落花瓣背景 -->
+    <div class="petal-container" id="petal-container"></div>
+    
+    <!-- 頂部精緻導覽列/操作區 -->
+    <header class="wedding-header">
+      <div class="logo">Mason & Sally</div>
+      <div class="btn-group">
+        <button id="btn-play-music" class="btn-icon" title="播放音樂">
+          <svg class="music-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zm-2 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+          </svg>
+          <span class="music-slash"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 卡片3D容器 -->
+    <div class="card-wrapper">
+      <div class="card-container">
+        <div class="folded-card" id="my-card">
+          
+          <!-- 1. 卡片封面 (左翻蓋) -->
+          <div class="card-cover" id="card-cover">
+            
+            <!-- 封面正面 (未打開時看到) -->
+            <div class="cover-front">
+              <div class="cover-pattern"></div>
+              <div class="cover-content">
+                <div class="ribbon-vertical"></div>
+                <div class="invitation-badge">
+                  <span class="badge-en">Wedding Invitation</span>
+                  <span class="badge-cn">婚禮邀請函</span>
+                </div>
+                
+                <!-- 賓客專屬尊稱 -->
+                <div class="guest-salutation">
+                  <p class="salute-label">專屬邀請</p>
+                  <h3 id="display-guest-name" class="salute-name">貴賓</h3>
+                  <p class="salute-suffix">鈞啟</p>
+                </div>
+                
+                <!-- 火漆印章 (點擊開啟卡片) -->
+                <div class="wax-seal-wrapper" id="wax-seal">
+                  <div class="wax-seal">
+                    <span class="seal-initials">M&S</span>
+                  </div>
+                  <div class="seal-pulse"></div>
+                  <p class="seal-tip">點擊火漆印章開啟</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 封面背面 (打開後在左側展示：喜帖正面圖) -->
+            <div class="cover-back">
+              <img src="assets/front.png" alt="喜帖正面" class="invite-image">
+            </div>
+            
+          </div>
+          
+          <!-- 2. 卡片底座 (右側內頁：喜帖背面圖) -->
+          <div class="card-inside-right">
+            <img src="assets/back.png" alt="喜帖背面" class="invite-image">
+            <div class="card-inner-overlay"></div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- 背景音樂 -->
+    <audio id="bg-music" loop src="assets/eternal_vows.webm"></audio>
+  </section>
+
+  <!-- JS Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

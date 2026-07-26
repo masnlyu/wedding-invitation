@@ -1,0 +1,1059 @@
+/* ==========================================================================
+   DESIGN SYSTEM & VARIABLES
+   ========================================================================== */
+:root {
+  /* Color Palette */
+  --bg-color-cream: #FAF6F0;
+  --bg-color-warm: #F4ECE1;
+  --primary-color: #2C2C2C;
+  --secondary-color: #5D544F;
+  --gold-primary: #C5A059;
+  --gold-light: #E9D2A5;
+  --gold-dark: #8F6F33;
+  --rose-accent: #E6C5C3;
+  --wax-red: #A32638;
+  --wax-red-glow: rgba(163, 38, 56, 0.4);
+  
+  /* Fonts */
+  --font-en-serif: 'Cinzel', serif;
+  --font-en-cursive: 'Great Vibes', cursive;
+  --font-cn-serif: 'Noto Serif TC', serif;
+  
+  /* Cards Config */
+  --card-width: 360px;
+  --card-height: 500px;
+  --card-width-mobile: 290px;
+  --card-height-mobile: 400px;
+  --shadow-premium: 0 20px 45px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(0, 0, 0, 0.05);
+  --shadow-inner: inset 0 0 40px rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================================================
+   RESET & BASE STYLES
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-cn-serif);
+  background-color: var(--bg-color-cream);
+  color: var(--primary-color);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   SCREEN MANAGER
+   ========================================================================== */
+.screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.screen.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 10;
+}
+
+/* ==========================================================================
+   1. LANDING/INTRO SCREEN
+   ========================================================================== */
+#intro-screen {
+  background: radial-gradient(circle at center, #FAF6F0 0%, #EFE8DC 100%);
+}
+
+/* Background floating petals animation */
+.intro-bg-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.intro-card {
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  padding: 10px;
+  z-index: 2;
+  animation: introCardFadeIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.gold-frame {
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  padding: 45px 35px;
+  background: rgba(250, 246, 240, 0.75);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  text-align: center;
+  position: relative;
+  box-shadow: var(--shadow-premium);
+  border-radius: 4px;
+}
+
+.gold-frame::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  border: 1px solid var(--gold-primary);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.title-en {
+  font-family: var(--font-en-serif);
+  font-size: 1.8rem;
+  letter-spacing: 6px;
+  color: var(--gold-dark);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.title-cn {
+  font-family: var(--font-cn-serif);
+  font-size: 2.4rem;
+  font-weight: 600;
+  letter-spacing: 12px;
+  text-indent: 12px; /* Center aligned including letter-spacing */
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.divider .line {
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+}
+
+.divider .dot {
+  width: 4px;
+  height: 4px;
+  background-color: var(--gold-primary);
+  border-radius: 50%;
+  margin: 0 8px;
+}
+
+.intro-text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--secondary-color);
+  margin-bottom: 35px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+/* Elegant Name Input styling */
+.input-group {
+  margin-bottom: 35px;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--gold-dark);
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 10px 6px 10px;
+  border: none;
+  border-bottom: 1px solid rgba(93, 84, 79, 0.3);
+  background: transparent;
+  outline: none;
+  font-family: var(--font-cn-serif);
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  border-bottom: 1px solid var(--gold-primary);
+}
+
+/* Gold Premium Button */
+.btn-primary {
+  position: relative;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 50%, var(--gold-dark) 100%);
+  color: #fff;
+  border: none;
+  padding: 14px 40px;
+  font-family: var(--font-cn-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  border-radius: 2px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-primary span {
+  position: relative;
+  z-index: 2;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(197, 160, 89, 0.6);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(197, 160, 89, 0.4);
+}
+
+/* Hover shine effect */
+.btn-glow {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: 0.5s;
+  z-index: 1;
+}
+
+.btn-primary:hover .btn-glow {
+  left: 100%;
+  transition: 0.7s ease-in-out;
+}
+
+/* ==========================================================================
+   2. SVG HAND-DRAWN ANIMATION SCREEN
+   ========================================================================== */
+#animation-screen {
+  background-color: var(--bg-color-cream);
+  flex-direction: column;
+}
+
+.animation-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 800px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* SVG Line Drawing Effects */
+.sketch-path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1800;
+  stroke-dashoffset: 1800;
+}
+
+/* Draw Vines */
+.sketch-path.vine {
+  stroke: var(--gold-primary);
+  stroke-width: 2.5;
+  animation: drawStroke 4s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+
+/* Draw Leaves */
+.sketch-path.leaf {
+  stroke: #7B8C70; /* Soft green */
+  stroke-width: 1.5;
+  fill: transparent;
+  animation: drawStroke 2s cubic-bezier(0.42, 0, 0.58, 1) 1.5s forwards,
+             fillLeaf 1.5s ease-out 3s forwards;
+}
+
+/* Draw Flower */
+.sketch-path.flower {
+  stroke: var(--rose-accent);
+  stroke-width: 1.8;
+  animation: drawStroke 1.5s ease-in-out 2.5s forwards,
+             fillFlower 1s ease-out 3.5s forwards;
+}
+
+/* Draw Couple - Groom */
+.sketch-path.couple-groom {
+  stroke: var(--secondary-color);
+  stroke-width: 2.2;
+  animation: drawStroke 3s ease-in-out 2.8s forwards;
+}
+
+/* Draw Couple - Bride */
+.sketch-path.couple-bride {
+  stroke: #c88882; /* Elegant rose gold/dusty pink */
+  stroke-width: 2.2;
+  animation: drawStroke 3s ease-in-out 2.8s forwards;
+}
+
+/* Draw Couple - Hands meeting */
+.sketch-path.couple-hands {
+  stroke: var(--gold-primary);
+  stroke-width: 2.2;
+  animation: drawStroke 1.2s ease 5.2s forwards;
+}
+
+/* Draw Couple - Heart */
+.sketch-path.couple-heart {
+  stroke: #d94b68;
+  stroke-width: 1.8;
+  animation: drawStroke 1s ease 5s forwards,
+             fillHeart 1s ease-out 5.8s forwards;
+}
+
+/* SVG Keyframes */
+@keyframes drawStroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fillLeaf {
+  to {
+    fill: rgba(123, 140, 112, 0.15);
+  }
+}
+
+@keyframes fillFlower {
+  to {
+    fill: rgba(230, 197, 195, 0.4);
+  }
+}
+
+@keyframes fillHeart {
+  to {
+    fill: rgba(217, 75, 104, 0.35);
+  }
+}
+
+/* Fading Texts above SVG */
+.romantic-quotes {
+  position: absolute;
+  top: 10%;
+  text-align: center;
+  width: 100%;
+  height: 40px;
+  z-index: 5;
+}
+
+.quote-line {
+  font-family: var(--font-cn-serif);
+  font-size: 1.25rem;
+  letter-spacing: 4px;
+  color: var(--secondary-color);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 1s ease;
+}
+
+.quote-line.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Skip Button */
+.btn-text {
+  position: absolute;
+  bottom: 5%;
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  font-family: var(--font-cn-serif);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.btn-text:hover {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   3. WEDDING CARD SCREEN
+   ========================================================================== */
+#wedding-screen {
+  background: radial-gradient(circle at center, #FAF6F0 0%, #E8DFD1 100%);
+  flex-direction: column;
+}
+
+/* Header bar */
+.wedding-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.logo {
+  font-family: var(--font-en-serif);
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  color: var(--gold-dark);
+  font-weight: 700;
+}
+
+.btn-group {
+  pointer-events: auto;
+}
+
+.btn-icon {
+  background: rgba(250, 246, 240, 0.7);
+  border: 1px solid rgba(197, 160, 89, 0.2);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--secondary-color);
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.btn-icon:hover {
+  background: #fff;
+  border-color: var(--gold-primary);
+  color: var(--gold-dark);
+  transform: scale(1.05);
+}
+
+/* Slash over music icon when muted */
+.music-slash {
+  position: absolute;
+  width: 70%;
+  height: 2px;
+  background-color: var(--wax-red);
+  transform: rotate(45deg);
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+
+.btn-icon.playing .music-slash {
+  opacity: 0;
+}
+
+/* Floating Flower Petals System */
+.petal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  background: radial-gradient(circle, #ffebf0 0%, #fbc7d4 70%, rgba(251, 199, 212, 0) 100%);
+  border-radius: 50% 0 50% 50%;
+  opacity: 0.7;
+  pointer-events: none;
+  transform-origin: left top;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translate(0, -10px) rotate(0deg);
+  }
+  100% {
+    transform: translate(100px, 105vh) rotate(360deg);
+  }
+}
+
+/* 3D CARD WRAPPER */
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  padding: 40px 20px;
+}
+
+.card-container {
+  width: var(--card-width);
+  height: var(--card-height);
+  perspective: 1600px;
+  position: relative;
+  transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1); /* 闔上動畫：慢速 (1.5秒) */
+  transform: translateX(0);
+}
+
+/* Shift container to the right when open to center the bifold */
+.card-container.open-layout {
+  transform: translateX(calc(var(--card-width) / 2));
+  transition: transform 2.2s cubic-bezier(0.25, 1, 0.5, 1); /* 打開動畫：慢速 (2.2秒) */
+}
+
+.folded-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1); /* 闔上動畫：慢速 (1.5秒) */
+}
+
+.card-container.open-layout .folded-card {
+  transition: transform 2.2s cubic-bezier(0.25, 1, 0.5, 1); /* 打開動畫：慢速 (2.2秒) */
+}
+
+/* ==========================================
+   CARD PARTS
+   ========================================== */
+
+/* COVER (Flaps left) */
+.card-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1); /* 闔上動畫：慢速 (1.5秒) */
+  z-index: 10;
+  box-shadow: 10px 0 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Cover rotated to open */
+.folded-card.open-flap .card-cover {
+  transform: rotateY(-180deg);
+  box-shadow: -15px 15px 35px rgba(0, 0, 0, 0.15);
+  transition: transform 2.2s cubic-bezier(0.25, 1, 0.5, 1); /* 打開動畫：慢速 (2.2秒) */
+}
+
+/* Cover Front & Back Faces */
+.cover-front,
+.cover-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 4px;
+}
+
+/* Cover Front (Closed Envelope style) */
+.cover-front {
+  background-color: var(--bg-color-warm);
+  border: 1px solid rgba(197, 160, 89, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 35px 25px;
+  z-index: 2;
+  box-shadow: var(--shadow-premium);
+  background-image: radial-gradient(var(--gold-light) 0.5px, transparent 0.5px), radial-gradient(var(--gold-light) 0.5px, var(--bg-color-warm) 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+.cover-pattern {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  pointer-events: none;
+}
+
+.cover-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3;
+}
+
+.ribbon-vertical {
+  width: 3px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--gold-dark), var(--gold-light));
+  margin-top: -15px;
+}
+
+.invitation-badge {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.badge-en {
+  font-family: var(--font-en-serif);
+  font-size: 0.95rem;
+  letter-spacing: 4px;
+  color: var(--gold-dark);
+  text-transform: uppercase;
+  display: block;
+}
+
+.badge-cn {
+  font-family: var(--font-cn-serif);
+  font-size: 1.5rem;
+  letter-spacing: 6px;
+  text-indent: 6px;
+  margin-top: 5px;
+  font-weight: 600;
+  display: block;
+}
+
+.guest-salutation {
+  text-align: center;
+  margin: 30px 0;
+  border-top: 1px dashed rgba(197, 160, 89, 0.3);
+  border-bottom: 1px dashed rgba(197, 160, 89, 0.3);
+  padding: 20px 0;
+  width: 80%;
+}
+
+.salute-label {
+  font-size: 0.75rem;
+  color: var(--secondary-color);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.salute-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  letter-spacing: 2px;
+  display: inline-block;
+  border-bottom: 1px solid var(--gold-primary);
+  padding: 2px 10px;
+}
+
+.salute-suffix {
+  font-size: 0.75rem;
+  color: var(--secondary-color);
+  margin-top: 8px;
+  letter-spacing: 2px;
+}
+
+/* WAX SEAL (Trigger Button) */
+.wax-seal-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.wax-seal {
+  width: 55px;
+  height: 55px;
+  background-color: var(--wax-red);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15), 
+              inset -4px -4px 10px rgba(0,0,0,0.3), 
+              inset 4px 4px 10px rgba(255,255,255,0.2);
+  cursor: pointer;
+  position: relative;
+  z-index: 5;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid rgba(163, 38, 56, 0.3);
+}
+
+.wax-seal:hover {
+  transform: scale(1.06);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2), 
+              inset -4px -4px 10px rgba(0,0,0,0.3), 
+              inset 4px 4px 10px rgba(255,255,255,0.3);
+}
+
+.seal-initials {
+  font-family: var(--font-en-cursive);
+  font-size: 1.4rem;
+  color: #fff;
+  opacity: 0.85;
+  margin-top: -3px;
+  user-select: none;
+}
+
+/* Pulsing effect around seal */
+.seal-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: 2px solid var(--wax-red);
+  opacity: 0;
+  animation: pulse 2s infinite;
+  pointer-events: none;
+  z-index: 4;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+.seal-tip {
+  margin-top: 10px;
+  font-size: 0.75rem;
+  color: var(--secondary-color);
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+/* Cover Back (Flops open to left, holds front.png) */
+.cover-back {
+  transform: rotateY(180deg);
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-inner);
+  overflow: hidden;
+}
+
+.invite-image {
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* 改為 fill，保證 750x1024 比例的喜帖上下文字（包括地址）不被裁切 */
+  display: block;
+}
+
+/* INSIDE RIGHT (Base Card, holds back.png) */
+.card-inside-right {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid rgba(197, 160, 89, 0.15);
+  box-shadow: var(--shadow-premium);
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Shade cover for inside right when closed */
+.card-inner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  transition: opacity 1.8s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.card-container.open .card-inner-overlay {
+  opacity: 0;
+}
+
+/* 3D Spine shading (adds a depth line in the folding crease) */
+.card-inside-right::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 15px;
+  background: linear-gradient(to right, rgba(0,0,0,0.12), transparent);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.cover-back::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 15px;
+  background: linear-gradient(to left, rgba(0,0,0,0.12), transparent);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Card interaction tips */
+.card-tips {
+  margin-top: 35px;
+  transition: all 0.5s ease;
+  opacity: 1;
+}
+
+.card-tips.hide {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.tip-text {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: var(--secondary-color);
+  background: rgba(250, 246, 240, 0.7);
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (RWD) & ADAPTATIONS
+   ========================================================================== */
+
+/* Mobile view adjustments (Standard screens) */
+@media (max-width: 768px) {
+  .card-container {
+    width: var(--card-width-mobile);
+    height: var(--card-height-mobile);
+  }
+  
+  .card-container.open-layout {
+    /* Since screen is narrow, let's shrink the card or keep it scaled */
+    transform: translateX(0); /* Don't translate off screen */
+  }
+  
+  /* On mobile, standard side-by-side opening will clip on narrow screens (e.g. 320px).
+     We use CSS transforms to scale the entire open card container so it fits in mobile screen! */
+  .card-wrapper {
+    overflow: visible;
+  }
+  
+  .card-container.open-layout .folded-card {
+    /* Scale down the card slightly when open so both pages fit side-by-side! */
+    transform: scale(0.65) translateX(50%);
+  }
+  
+  .title-cn {
+    font-size: 2rem;
+    letter-spacing: 8px;
+    text-indent: 8px;
+  }
+  
+  .gold-frame {
+    padding: 35px 20px;
+  }
+  
+  .logo {
+    font-size: 1.25rem;
+  }
+  
+  .wedding-header {
+    padding: 15px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ultra narrow screens */
+  .card-container.open-layout .folded-card {
+    transform: scale(0.55) translateX(50%);
+  }
+  
+  .title-en {
+    font-size: 1.5rem;
+  }
+  
+  .title-cn {
+    font-size: 1.8rem;
+  }
+}
+
+/* Keyframes for Intro Screen fading in */
+@keyframes introCardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   LANDSCAPE OR LOW-HEIGHT MOBILE VIEW ADJUSTMENTS
+   ========================================================================== */
+@media (max-height: 520px) {
+  /* 1. Intro Screen adjustments to prevent overflow */
+  .intro-card {
+    max-width: 440px;
+    padding: 5px;
+  }
+  
+  .gold-frame {
+    padding: 20px 25px;
+  }
+  
+  .title-en {
+    font-size: 1.3rem;
+    letter-spacing: 4px;
+    margin-bottom: 2px;
+  }
+  
+  .title-cn {
+    font-size: 1.6rem;
+    letter-spacing: 8px;
+    text-indent: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .divider {
+    margin-bottom: 12px;
+  }
+  
+  .intro-text {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+  }
+  
+  .input-group input {
+    padding: 6px 10px 4px 10px;
+    font-size: 1rem;
+  }
+  
+  .btn-primary {
+    padding: 10px 30px;
+    font-size: 0.9rem;
+  }
+  
+  /* 2. SVG animation adjustments */
+  .animation-container {
+    max-height: 95vh;
+  }
+  
+  /* 3. Card Screen and 3D Card scaling for low height */
+  .card-container {
+    /* Set dimensions to mobile size first */
+    width: var(--card-width-mobile);
+    height: var(--card-height-mobile);
+    /* Scale down to fit landscape screen height */
+    transform: scale(0.85);
+    transform-origin: center center;
+  }
+  
+  /* When open, we shift it to center the bifold in landscape */
+  .card-container.open-layout {
+    transform: scale(0.85) translateX(calc(var(--card-width-mobile) / 2)) !important;
+  }
+  
+  /* Override portrait mobile scale logic */
+  .card-container.open-layout .folded-card {
+    transform: scale(1) translateX(0) !important;
+  }
+  
+  /* Header adjustments for low height */
+  .wedding-header {
+    padding: 10px 20px;
+  }
+  
+  .logo {
+    font-size: 1.1rem;
+  }
+  
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Extra scale down for extremely low height screens (e.g. height <= 420px) */
+@media (max-height: 420px) {
+  .card-container {
+    transform: scale(0.76);
+  }
+  
+  .card-container.open-layout {
+    transform: scale(0.76) translateX(calc(var(--card-width-mobile) / 2)) !important;
+  }
+}
+
+/* For ultra low-height screens (e.g. height <= 340px) */
+@media (max-height: 340px) {
+  .card-container {
+    transform: scale(0.60);
+  }
+  
+  .card-container.open-layout {
+    transform: scale(0.60) translateX(calc(var(--card-width-mobile) / 2)) !important;
+  }
+}
