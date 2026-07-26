@@ -911,6 +911,10 @@ body {
   .wedding-header {
     padding: 15px 20px;
   }
+  
+  #btn-play-music {
+    display: none !important;
+  }
 }
 
 @media (max-width: 480px) {

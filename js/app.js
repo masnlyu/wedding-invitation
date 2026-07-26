@@ -152,6 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   
   function playMusic() {
+    // 若為手機版 (螢幕寬度 <= 768px)，不播放音樂
+    if (window.innerWidth <= 768) {
+      return;
+    }
+    
     bgMusic.play()
       .then(() => {
         btnPlayMusic.classList.add('playing');
