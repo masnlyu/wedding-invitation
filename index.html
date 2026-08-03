@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Andy & Lisa - 我們的婚禮故事誌</title>
+  <title>Mason Lyu & Sally Liu - 我們的婚禮故事誌</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20260803_2306">
 </head>
 <body>
 
@@ -79,7 +79,7 @@
             </div>
             <div class="cover-text-content">
               <div class="magazine-badge">THE WEDDING ISSUE</div>
-              <h1 class="couple-title">Andy & Lisa</h1>
+              <h1 class="couple-title">Mason & Sally</h1>
               <div class="cover-divider"></div>
               <p class="cover-date">2026 . 10 . 24</p>
             </div>
@@ -90,15 +90,15 @@
             <div class="prologue-arches">
               <div class="arch-item">
                 <div class="arch-frame">
-                  <img src="assets/groom.png" alt="Groom Andy" class="arch-img">
+                  <img src="assets/groom.png" alt="Groom Mason" class="arch-img">
                 </div>
-                <div class="arch-name">Groom Andy</div>
+                <div class="arch-name">Groom Mason</div>
               </div>
               <div class="arch-item">
                 <div class="arch-frame">
-                  <img src="assets/bride.png" alt="Bride Lisa" class="arch-img">
+                  <img src="assets/bride.png" alt="Bride Sally" class="arch-img">
                 </div>
-                <div class="arch-name">Bride Lisa</div>
+                <div class="arch-name">Bride Sally</div>
               </div>
             </div>
             
@@ -120,15 +120,35 @@
 
           <!-- 頁面 3: 婚紗照與月曆 (照上傳圖片調整) -->
           <article class="magazine-page calendar-page" data-page="3">
-            <div class="calendar-collage-container">
-              <img src="assets/collage.png" alt="婚紗照合照" class="collage-img" onclick="openLightbox('assets/collage.png')">
+            <!-- 婚紗照輪播圖區塊 (支援 collage1.png, collage2.png, collage.png 輪播，點擊大圖檢視) -->
+            <div class="calendar-collage-container carousel-container">
+              <div class="carousel-slides">
+                <div class="carousel-slide active">
+                  <img src="assets/collage1.png" alt="婚紗照合照 1" class="collage-img" onclick="openLightbox('assets/collage1.png')">
+                </div>
+                <div class="carousel-slide">
+                  <img src="assets/collage2.png" alt="婚紗照合照 2" class="collage-img" onclick="openLightbox('assets/collage2.png')">
+                </div>
+                <div class="carousel-slide">
+                  <img src="assets/collage3.png" onerror="this.onerror=null; this.src='assets/collage.png';" alt="婚紗照合照 3" class="collage-img" onclick="openLightbox(this.src)">
+                </div>
+              </div>
+              <!-- 輪播控制箭頭 -->
+              <button type="button" class="carousel-btn prev-btn" aria-label="上一張">&#10094;</button>
+              <button type="button" class="carousel-btn next-btn" aria-label="下一張">&#10095;</button>
+              <!-- 輪播圓點指標 -->
+              <div class="carousel-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+              </div>
             </div>
             
             <div class="calendar-month">10 : OCTOBER</div>
             
             <div class="calendar-table">
               <div class="cal-header-row">
-                <span class="sun">S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span class="sat">S</span>
+                <span class="sun">Sun</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span class="sat">Sat</span>
               </div>
               <div class="cal-grid-row">
                 <span class="empty"></span>
@@ -186,31 +206,28 @@
           <!-- 頁面 4: 宴席與地圖 (照上傳圖片調整) -->
           <article class="magazine-page map-page" data-page="4">
             <div class="map-header">
-              <div class="welcome-cursive">Welcome</div>
+              <div class="welcome-cursive" style="padding-top: 20px;">Welcome</div>
               <div class="welcome-sub">TO THE WEDDING OF</div>
             </div>
             
-            <div class="map-row-container">
-              <div class="map-box-left">
-                <img src="assets/map_left.png" alt="Google 地圖" class="map-img-split">
-                <!-- 透明覆蓋點擊區，點擊可直接導航 -->
-                <a href="https://www.google.com/maps/search/?api=1&query=台北文華東方酒店" target="_blank" class="map-overlay-link" title="開啟 Google 地圖導覽"></a>
-              </div>
-              <div class="map-box-right">
-                <img src="assets/map_right.png" alt="手繪地圖" class="map-img-split">
-              </div>
+            <!-- 點擊地圖可觸發全螢幕放大檢視 (使用行內樣式，徹底避免瀏覽器快取 CSS 的問題) -->
+            <div class="map-row-container" style="display: flex; width: 100%; aspect-ratio: 1053 / 648; margin: 15px 0; border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05); border: 1px solid rgba(197, 160, 89, 0.12); background-color: var(--bg-cream-dark); cursor: pointer;" onclick="openLightbox('assets/MAP.png')">
+              <img src="assets/MAP.png" alt="交通資訊地圖" class="map-combined-img" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+              <div class="map-zoom-hint">🔍 點擊放大地圖</div>
             </div>
             
             <div class="map-footer">
-              <div class="couple-names-cursive">Andy <span>and</span> Lisa</div>
-              <div class="hotel-title">台北文華酒店</div>
-              <div class="hotel-address">10548台北市松山區敦化北路158號</div>
+              <div class="couple-names-cursive" style="padding-top: 24px; padding-bottom: 20px;">Mason <span>and</span> Sally</div>
+              <a href="https://www.google.com/maps/search/?api=1&query=天圓地方+麗緻婚宴會館" target="_blank" class="map-hotel-link" style="text-decoration: none; color: inherit; display: inline-block;" title="點擊開啟 Google 地圖導航">
+                <div class="hotel-title" style="padding-bottom: 10px; font-size: 20px;">天圓地方 婚宴會館</div>
+                <div class="hotel-title" style="font-size: 26px; padding-bottom: 10px;">軒 頤 廳</div>
+                <div class="hotel-address" style="font-size: 14px;">台中市東區復興路四段186號11F</div>
+              </a>
             </div>
           </article>
 
           <!-- 頁面 5: RSVP 出席調查表單 (版型不變) -->
-          <article class="magazine-page rsvp-page" data-page="5">
-            <div class="section-gold-title">R.S.V.P</div>
+          <article class="magazine-page rsvp-page" data-page="5" style="padding: 40px 30px;">
             <h2 class="page-title">出席調查表單</h2>
             <form id="rsvp-form" class="rsvp-form">
               
@@ -247,14 +264,8 @@
 
               <div class="form-group" id="group-diet">
                 <input type="text" id="rsvp-diet" placeholder=" ">
-                <label for="rsvp-diet">飲食禁忌 / 葷素需求及人數</label>
+                <label for="rsvp-diet">葷素需求(備註人數)</label>
               </div>
-
-              <div class="form-group">
-                <textarea id="rsvp-blessing" rows="2" placeholder=" "></textarea>
-                <label for="rsvp-blessing">給我們的話 / 祝福</label>
-              </div>
-
               <button type="submit" class="btn-gold-submit">
                 <span>傳遞幸福回覆</span>
                 <div class="btn-glow"></div>
@@ -298,6 +309,6 @@
   </div>
 
   <!-- JavaScript -->
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=20260803_2306"></script>
 </body>
 </html>

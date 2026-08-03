@@ -383,4 +383,103 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // 啟動花瓣飄落
   startPetals();
+
+  // ==========================================
+  // 10. PHOTO CAROUSEL SYSTEM (PAGE 3)
+  // ==========================================
+  const carousel = document.querySelector('.carousel-container');
+  if (carousel) {
+    const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+    const prevBtn = carousel.querySelector('.prev-btn');
+    const nextBtn = carousel.querySelector('.next-btn');
+    const dots = Array.from(carousel.querySelectorAll('.carousel-dots .dot'));
+    let currentSlideIndex = 0;
+    let carouselTimer = null;
+
+    function showSlide(index) {
+      // 範圍循環
+      if (index >= slides.length) {
+        currentSlideIndex = 0;
+      } else if (index < 0) {
+        currentSlideIndex = slides.length - 1;
+      } else {
+        currentSlideIndex = index;
+      }
+
+      // 切換 slides
+      slides.forEach((slide, idx) => {
+        if (idx === currentSlideIndex) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      // 切換 dots
+      dots.forEach((dot, idx) => {
+        if (idx === currentSlideIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+
+    function nextSlide() {
+      showSlide(currentSlideIndex + 1);
+    }
+
+    function prevSlide() {
+      showSlide(currentSlideIndex - 1);
+    }
+
+    // 啟動與重新啟動自動輪播
+    function startAutoPlay() {
+      stopAutoPlay();
+      carouselTimer = setInterval(nextSlide, 4500); // 4.5 秒自動切換下一張
+    }
+
+    function stopAutoPlay() {
+      if (carouselTimer) {
+        clearInterval(carouselTimer);
+        carouselTimer = null;
+      }
+    }
+
+    // 事件監聽與阻止冒泡 (重要：防止點選輪播箭頭與圓點導致整個 flipbook 翻頁)
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      prevSlide();
+      startAutoPlay(); // 點選後重設自動輪播計時器
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nextSlide();
+      startAutoPlay();
+    });
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const index = parseInt(dot.getAttribute('data-index'), 10);
+        showSlide(index);
+        startAutoPlay();
+      });
+    });
+
+    // 當手機滑動輪播圖區域時，阻止冒泡以防止觸發 flipbook 翻頁
+    carousel.addEventListener('touchstart', (e) => {
+      e.stopPropagation();
+      stopAutoPlay();
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', (e) => {
+      e.stopPropagation();
+      startAutoPlay();
+    }, { passive: true });
+
+    // 初始啟動自動輪播
+    startAutoPlay();
+  }
 });

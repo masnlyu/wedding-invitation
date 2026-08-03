@@ -704,7 +704,7 @@ body {
   opacity: 0;
   z-index: 1;
   /* 合併自 .page-inner */
-  padding: 40px 30px;
+  /* padding: 40px 30px; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -966,7 +966,32 @@ body {
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(197, 160, 89, 0.15);
-  cursor: pointer;
+  position: relative;
+  background-color: var(--white-pure);
+}
+
+.carousel-slides {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+  z-index: 1;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
 }
 
 .collage-img {
@@ -974,11 +999,72 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: var(--transition-fast);
+  cursor: pointer;
+  transition: transform 0.5s ease;
 }
 
 .collage-img:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
+}
+
+/* 輪播切換按鈕 */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  border-radius: 50%;
+  color: var(--gold-dark);
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.carousel-btn:hover {
+  background-color: var(--gold-primary);
+  color: var(--white-pure);
+}
+
+.carousel-btn.prev-btn {
+  left: 10px;
+}
+
+.carousel-btn.next-btn {
+  right: 10px;
+}
+
+/* 指標圓點 */
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+
+.carousel-dots .dot {
+  width: 7px;
+  height: 7px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 0.5px solid rgba(197, 160, 89, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dots .dot.active {
+  background-color: var(--gold-dark);
+  transform: scale(1.2);
 }
 
 .calendar-month {
@@ -1108,44 +1194,44 @@ body {
 
 .map-row-container {
   display: flex;
-  gap: 15px;
   width: 100%;
-  aspect-ratio: 1090 / 1009;
+  aspect-ratio: 1053 / 648; /* 使用合併圖 MAP.png 的真實解析度比例 1053x648 */
   margin: 25px 0; /* 增加上下間距維持平衡 */
-}
-
-.map-box-left,
-.map-box-right {
-  flex: 1;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
   position: relative;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(197, 160, 89, 0.12);
   background-color: var(--bg-cream-dark);
-}
-
-.map-img-split {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.map-overlay-link {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
   cursor: pointer;
-  background-color: rgba(255, 255, 255, 0);
-  transition: background-color 0.3s ease;
 }
 
-.map-overlay-link:hover {
-  background-color: rgba(197, 160, 89, 0.03);
+.map-combined-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 改為 contain 確保完美等比例縮放不變形 */
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.map-row-container:hover .map-combined-img {
+  transform: scale(1.03);
+}
+
+.map-zoom-hint {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  color: var(--gold-dark);
+  font-size: 0.58rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  z-index: 12;
 }
 
 .map-footer {
@@ -1154,6 +1240,7 @@ body {
 }
 
 .couple-names-cursive {
+  padding-top: 16px;
   font-family: var(--font-en-cursive);
   font-size: 2.6rem;
   color: var(--gold-dark);
