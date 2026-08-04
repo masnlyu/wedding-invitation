@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // 偵測是否為行動裝置
+  const isMobile = window.innerWidth <= 480 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
   // ==========================================
   // 1. DOM ELEMENTS
   // ==========================================
@@ -11,7 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const waxSeal = document.getElementById('wax-seal');
   
   const bgMusic = document.getElementById('bg-music');
-  bgMusic.volume = 0.18; // 設置背景音樂音量為 18% (柔和背景音)
+  if (bgMusic) {
+    if (isMobile) {
+      bgMusic.remove(); // 手機版移除音樂標籤以防請求與播放限制
+    } else {
+      bgMusic.volume = 0.18; // 設置背景音樂音量為 18% (柔和背景音)
+    }
+  }
   const btnMusicToggle = document.getElementById('btn-music-toggle');
   
   const magazineBook = document.getElementById('magazine-book');
@@ -33,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const petalContainer = document.getElementById('petal-container');
   const swipeHint = document.getElementById('swipe-hint');
   
-  let guestName = '貴賓';
+  let guestName = '';
   let currentPageIndex = 0;
   
   // ==========================================
@@ -46,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (coverGuestName) {
     coverGuestName.textContent = guestName;
   }
-  rsvpName.value = guestName; // 自動填入 RSVP 表單的姓名
+  rsvpName.value = ''; // 預設空值，由賓客自行填寫
   
   // ==========================================
   // 3. ENVELOPE OPENING & EXTRACT CARDS
@@ -75,27 +84,35 @@ document.addEventListener('DOMContentLoaded', () => {
   // 4. MUSIC CONTROL
   // ==========================================
   function playBackgroundMusic() {
+    if (isMobile || !bgMusic || !document.getElementById('bg-music')) return; // 手機版或音樂標籤被移除時不執行播放
+    
     bgMusic.play()
       .then(() => {
-        btnMusicToggle.classList.add('playing');
-        btnMusicToggle.setAttribute('title', '靜音');
+        if (btnMusicToggle) {
+          btnMusicToggle.classList.add('playing');
+          btnMusicToggle.setAttribute('title', '靜音');
+        }
       })
       .catch(err => {
         console.log("Music auto-play was blocked or failed:", err);
       });
   }
   
-  btnMusicToggle.addEventListener('click', () => {
-    if (bgMusic.paused) {
-      bgMusic.play();
-      btnMusicToggle.classList.add('playing');
-      btnMusicToggle.setAttribute('title', '靜音');
-    } else {
-      bgMusic.pause();
-      btnMusicToggle.classList.remove('playing');
-      btnMusicToggle.setAttribute('title', '播放音樂');
-    }
-  });
+  if (btnMusicToggle) {
+    btnMusicToggle.addEventListener('click', () => {
+      if (isMobile || !bgMusic || !document.getElementById('bg-music')) return;
+      
+      if (bgMusic.paused) {
+        bgMusic.play();
+        btnMusicToggle.classList.add('playing');
+        btnMusicToggle.setAttribute('title', '靜音');
+      } else {
+        bgMusic.pause();
+        btnMusicToggle.classList.remove('playing');
+        btnMusicToggle.setAttribute('title', '播放音樂');
+      }
+    });
+  }
 
   // ==========================================
   // 5. MAGAZINE SLIDE SYSTEM (DECK CONTROLLER)
@@ -118,8 +135,23 @@ document.addEventListener('DOMContentLoaded', () => {
     btnNextPage.disabled = (currentPageIndex === pages.length - 1);
   }
   
+  let isFlipping = false;
+
   function goToPage(index) {
-    if (index >= 0 && index < pages.length) {
+    if (isFlipping) return; // 當動畫還沒完成時，拒絕下一次滑動/翻頁觸發，防止快速連擊導致樣式異常
+    
+    if (index >= 0 && index < pages.length && index !== currentPageIndex) {
+      isFlipping = true;
+      const oldIndex = currentPageIndex;
+      const direction = index > oldIndex ? 'forward' : 'backward';
+      
+      // 在觸發翻頁的書頁上加上動畫類以觸發 3D 抬起特效
+      if (direction === 'forward') {
+        pages[oldIndex].classList.add('flip-forward');
+      } else {
+        pages[index].classList.add('flip-backward');
+      }
+      
       currentPageIndex = index;
       updatePagesLayout();
       
@@ -131,6 +163,22 @@ document.addEventListener('DOMContentLoaded', () => {
           swipeHint.classList.add('show');
         }
       }
+      
+      // 依據翻頁方向（下一頁 1.8 秒，上一頁 1.2 秒）動態移除動畫類別，還原靜態樣式
+      const animDuration = direction === 'forward' ? 1800 : 1200;
+      setTimeout(() => {
+        if (direction === 'forward') {
+          pages[oldIndex].classList.remove('flip-forward');
+        } else {
+          pages[index].classList.remove('flip-backward');
+        }
+      }, animDuration);
+
+      // 當翻動頁面已翻轉過垂直中線、從畫面中不可見時即可提早解鎖（下一頁 900ms，上一頁 700ms），大幅提升連續操作的流暢度
+      const unlockDuration = direction === 'forward' ? 900 : 700;
+      setTimeout(() => {
+        isFlipping = false; // 提早解鎖
+      }, unlockDuration);
     }
   }
   
@@ -161,13 +209,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
   
   function handleSwipeGesture() {
-    const swipeThreshold = 50; // 滑動門檻 (px)
     const deltaX = touchEndX - touchStartX;
+    const swipeThresholdLeft = 45;   // 向左滑動 (下一頁) 門檻 (px)
+    const swipeThresholdRight = 25;  // 向右滑動 (上一頁) 門檻 (px)，降低以使觸發更靈敏
     
-    if (deltaX < -swipeThreshold) {
+    if (deltaX < -swipeThresholdLeft) {
       // 向左滑動 -> 下一頁
       goToPage(currentPageIndex + 1);
-    } else if (deltaX > swipeThreshold) {
+    } else if (deltaX > swipeThresholdRight) {
       // 向右滑動 -> 上一頁
       goToPage(currentPageIndex - 1);
     }
