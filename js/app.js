@@ -260,10 +260,12 @@ document.addEventListener('DOMContentLoaded', () => {
   rsvpAttend.addEventListener('change', (e) => {
     if (e.target.value === 'no') {
       groupGuestsCount.style.display = 'none';
-      groupDiet.style.display = 'none';
+      // groupDiet.style.display = 'none';
+      groupDiet.querySelector('label').textContent = '寫下想對我們說的話';
     } else {
       groupGuestsCount.style.display = 'block';
       groupDiet.style.display = 'block';
+      groupDiet.querySelector('label').textContent = '備註說明(例:葷/素)';
     }
   });
   

@@ -19,7 +19,7 @@
   /* Fonts */
   --font-en-serif: 'Cinzel', serif;
   --font-en-cursive: 'Great Vibes', cursive;
-  --font-cn-serif: 'Noto Serif TC', serif;
+  --font-cn-serif: 'Noto Sans TC', sans-serif;
   
   /* Layout Config */
   --transition-smooth: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
@@ -875,11 +875,14 @@ input, textarea, select {
 }
 
 .couple-title {
-  font-family: var(--font-en-serif);
-  font-size: 2.2rem;
+  font-family: var(--font-en-serif); /* 採用與第四頁 TO THE WEDDING 相同的 Cinzel 襯線字型 */
+  font-size: 1.8rem; /* 模型精心設計的黃金比例尺寸，呈現高雅大方比例 */
+  font-weight: 600; /* 與 TO THE WEDDING 相同的半粗體字重 */
+  letter-spacing: 6px; /* 寬體字母間距，極具現代畫報高級質感 */
+  text-indent: 6px; /* 對齊首尾縮排，防止視覺偏右 */
+  text-transform: uppercase; /* 自動轉為全大寫 */
   color: var(--text-charcoal);
-  font-weight: 400;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .cover-divider {
@@ -1740,6 +1743,14 @@ input, textarea, select {
   .magazine-page {
     border-radius: 0;
     box-shadow: none;
+    overflow-y: auto; /* 解決小螢幕或虛擬鍵盤彈出時內容被裁切的問題 */
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none; /* IE/Edge 隱藏滾動條 */
+    scrollbar-width: none; /* Firefox 隱藏滾動條 */
+  }
+
+  .magazine-page::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Webkit 隱藏滾動條，保持精美排版 */
   }
 
   .magazine-footer {
@@ -1762,7 +1773,9 @@ input, textarea, select {
   }
   
   .couple-title {
-    font-size: 1.8rem;
+    font-size: 1.35rem; /* 手機版全大寫寬體間距黃金比例尺寸 */
+    letter-spacing: 4px;
+    text-indent: 4px;
   }
   
   .prologue-arches {
