@@ -373,6 +373,7 @@ animation: slowMoveDown 1s ease-in-out forwards;
   background-color: #e5dac9;
   border-radius: 4px;
   z-index: 1;
+  transform: translateZ(-5px);
 }
 
 .env-left {
@@ -386,6 +387,7 @@ animation: slowMoveDown 1s ease-in-out forwards;
   border-left: 190px solid #f2e7d7;
   border-radius: 4px 0 0 4px;
   z-index: 5;
+  transform: translateZ(1px);
 }
 
 .env-right {
@@ -399,6 +401,7 @@ animation: slowMoveDown 1s ease-in-out forwards;
   border-right: 190px solid #ecdcc8;
   border-radius: 0 4px 4px 0;
   z-index: 5;
+  transform: translateZ(1px);
 }
 
 .env-bottom {
@@ -412,6 +415,7 @@ animation: slowMoveDown 1s ease-in-out forwards;
   border-bottom: 140px solid #ebdcb7;
   border-radius: 0 0 4px 4px;
   z-index: 6;
+  transform: translateZ(2px);
 }
 
 /* 信封上摺蓋 (向外旋轉) */
@@ -426,12 +430,13 @@ animation: slowMoveDown 1s ease-in-out forwards;
   border-top: 140px solid #d9c8ac;
   border-radius: 4px 4px 0 0;
   transform-origin: top center;
+  transform: translateZ(3px) rotateX(0deg);
   transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s 0.8s;
   z-index: 7;
 }
 
 .envelope-3d.open .env-top {
-  transform: rotateX(180deg);
+  transform: translateZ(-2px) rotateX(180deg);
   z-index: 2; /* 旋轉開後放到信封後方，z-index變化會有延遲 */
   border-top-color: #ecdcc8;
 }
@@ -446,6 +451,7 @@ animation: slowMoveDown 1s ease-in-out forwards;
   align-items: center;
   cursor: pointer;
   z-index: 15;
+  transform: translateZ(4px);
   transition: opacity 0.5s ease;
 }
 
