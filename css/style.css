@@ -335,10 +335,12 @@ input, textarea, select {
 }
 
 .envelope-3d.open {
-  animation: none;
+  animation:none;
   transform: translateY(100px) rotateX(0deg);
   opacity: 1;
   pointer-events: auto;
+  /* 加入下面這行：控制平滑移動 */
+animation: slowMoveDown 1s ease-in-out forwards;
 }
 
 @keyframes envEntrance {
@@ -349,6 +351,15 @@ input, textarea, select {
   100% {
     opacity: 1;
     transform: translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes slowMoveDown {
+  0% {
+    transform: translateY(0) rotateX(0deg);
+  }
+  100% {
+    transform: translateY(150px) rotateX(0deg);
   }
 }
 
@@ -415,13 +426,13 @@ input, textarea, select {
   border-top: 140px solid #d9c8ac;
   border-radius: 4px 4px 0 0;
   transform-origin: top center;
-  transition: var(--transition-smooth);
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s 0.8s;
   z-index: 7;
 }
 
 .envelope-3d.open .env-top {
   transform: rotateX(180deg);
-  z-index: 2; /* 旋轉開後放到信封後方 */
+  z-index: 2; /* 旋轉開後放到信封後方，z-index變化會有延遲 */
   border-top-color: #ecdcc8;
 }
 
@@ -474,7 +485,7 @@ input, textarea, select {
 .seal-pulse {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 0px;
   width: 55px;
   height: 55px;
   border-radius: 50%;
@@ -508,18 +519,31 @@ input, textarea, select {
 .env-letter {
   position: absolute;
   top: 10px;
-  left: 15px;
-  width: 350px;
-  height: 250px;
+  left: var(--card-left, 90px);
+  width: var(--card-width, 200px);
+  height: var(--card-height, 260px);
   background-color: var(--white-pure);
   border-radius: 3px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   z-index: 3;
   transform: translate3d(0, 0, 0);
-  transition: var(--transition-smooth);
+  transition: opacity 0.1s ease;
   overflow: hidden;
+  opacity: 0; /* 預設隱藏，避免從信封接縫漏出邊緣 */
 }
 
+#mini-cover-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--target-width, 375px);
+  height: var(--target-height, 580px);
+  transform: translate(-50%, -50%) scale(var(--mini-scale, 0.2));
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+/* 原本的 letter-front-preview 等相關樣式保留或可刪除，這裡為求穩定先保留 */
 .letter-front-preview {
   padding: 30px 25px;
   height: 100%;
@@ -578,29 +602,31 @@ input, textarea, select {
 
 /* 抽出卡片並覆蓋全螢幕的動畫狀態 */
 .envelope-3d.open .env-letter {
+  opacity: 1; /* 信封一打開就立刻顯示內容物 */
   animation: extractLetter 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 1s;
 }
 
 @keyframes extractLetter {
   0% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scale(1);
     z-index: 3;
+    opacity: 1;
   }
-  40% {
-    transform: translate3d(0, -180px, 0);
+  45% {
+    transform: translate3d(0, -250px, 0) scale(1);
     z-index: 3;
+    opacity: 1;
   }
-  60% {
-    transform: translate3d(0, -180px, 10px);
-    z-index: 100; /* 拉出信封並放到最上層 */
-    width: 350px;
-    height: 250px;
+  55% {
+    transform: translate3d(0, -250px, 10px) scale(1);
+    z-index: 100;
     opacity: 1;
   }
   100% {
-    transform: translate3d(0, 0, 10px) scale(2);
+    transform: translate3d(var(--target-x, 0px), var(--target-y, -150px), 10px) scale(var(--target-scale, 3.5));
     z-index: 100;
-    opacity: 0; /* 放大到全螢幕時淡出，無縫切換到雜誌畫面 */
+    opacity: 1;
   }
 }
 
@@ -608,7 +634,7 @@ input, textarea, select {
    6. IMMERSIVE MAGAZINE SECTION
    ========================================================================== */
 #magazine-section {
-  background-color: var(--bg-cream-light);
+  background: radial-gradient(circle at center, var(--bg-cream-light) 0%, var(--bg-cream-dark) 100%);
   flex-direction: column;
   justify-content: space-between;
 }
@@ -876,7 +902,7 @@ input, textarea, select {
 
 .couple-title {
   font-family: var(--font-en-serif); /* 採用與第四頁 TO THE WEDDING 相同的 Cinzel 襯線字型 */
-  font-size: 1.8rem; /* 模型精心設計的黃金比例尺寸，呈現高雅大方比例 */
+  font-size: 1.5rem; /* 模型精心設計的黃金比例尺寸，呈現高雅大方比例 */
   font-weight: 600; /* 與 TO THE WEDDING 相同的半粗體字重 */
   letter-spacing: 6px; /* 寬體字母間距，極具現代畫報高級質感 */
   text-indent: 6px; /* 對齊首尾縮排，防止視覺偏右 */
@@ -1652,8 +1678,10 @@ input, textarea, select {
   }
   
   .env-letter {
-    width: 260px;
-    height: 190px;
+    width: var(--card-width, 150px);
+    height: var(--card-height, 195px);
+    left: var(--card-left, 70px);
+    top: 10px;
   }
   
   .env-left {
@@ -1681,8 +1709,8 @@ input, textarea, select {
   }
   
   .wax-seal-container {
-    top: 92.5px;
-    left: 117.5px;
+    top: 85px;
+    left: 120px;
   }
   
   .salutation-box {
@@ -1702,24 +1730,24 @@ input, textarea, select {
   
   @keyframes extractLetter {
     0% {
-      transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0) scale(1);
       z-index: 3;
+      opacity: 1;
     }
-    40% {
-      transform: translate3d(0, -120px, 0);
+    45% {
+      transform: translate3d(0, -250px, 0) scale(1);
       z-index: 3;
+      opacity: 1;
     }
-    60% {
-      transform: translate3d(0, -120px, 10px);
+    55% {
+      transform: translate3d(0, -250px, 10px) scale(1);
       z-index: 100;
-      width: 260px;
-      height: 190px;
       opacity: 1;
     }
     100% {
-      transform: translate3d(0, 0, 10px) scale(2);
+      transform: translate3d(var(--target-x, 0px), var(--target-y, -150px), 10px) scale(var(--target-scale, 2.8));
       z-index: 100;
-      opacity: 0;
+      opacity: 1;
     }
   }
   
