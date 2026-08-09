@@ -175,15 +175,21 @@ document.addEventListener('DOMContentLoaded', () => {
       
       currentPageIndex = index;
       updatePagesLayout();
-      
-      // 當翻到最後一頁 (RSVP) 時隱藏滑動提示，其他頁面顯示
-      if (swipeHint) {
-        if (currentPageIndex === pages.length - 1) {
-          swipeHint.classList.remove('show');
-        } else {
-          swipeHint.classList.add('show');
+            // 動態調整滑動提示
+        if (swipeHint) {
+          const textSpan = swipeHint.querySelector('span:first-child');
+          const arrowSpan = swipeHint.querySelector('.arrow');
+          
+          if (currentPageIndex === pages.length - 1) {
+            // 最後一頁提示向右滑動
+            textSpan.textContent = '向右滑動翻頁';
+            arrowSpan.textContent = '←';
+          } else {
+            // 其他頁提示向左滑動
+            textSpan.textContent = '向左滑動翻頁';
+            arrowSpan.textContent = '➔';
+          }
         }
-      }
       
       // 依據翻頁方向（下一頁 1.8 秒，上一頁 1.2 秒）動態移除動畫類別，還原靜態樣式
       const animDuration = direction === 'forward' ? 1800 : 1200;
@@ -276,19 +282,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // 8. RSVP FORM INTERACTIONS & CONFETTI
   // ==========================================
-  
-  // 當選擇不克出席時，動態隱藏出席人數與飲食禁忌，保持介面簡潔
-  rsvpAttend.addEventListener('change', (e) => {
-    if (e.target.value === 'no') {
-      groupGuestsCount.style.display = 'none';
-      // groupDiet.style.display = 'none';
-      groupDiet.querySelector('label').textContent = '寫下想對我們說的話';
-    } else {
-      groupGuestsCount.style.display = 'block';
-      groupDiet.style.display = 'block';
-      groupDiet.querySelector('label').textContent = '備註說明(例:葷/素)';
-    }
-  });
+    const groupBlessing = document.getElementById('group-blessing');
+    
+    // 初始化隱藏祝福欄位
+    if (groupBlessing) groupBlessing.style.display = 'none';
+    
+    rsvpAttend.addEventListener('change', (e) => {
+      if (e.target.value === 'no') {
+        groupGuestsCount.style.display = 'none';
+        if (groupDiet) groupDiet.style.display = 'none';
+        if (groupBlessing) groupBlessing.style.display = 'block';
+      } else {
+        groupGuestsCount.style.display = 'block';
+        if (groupDiet) groupDiet.style.display = 'block';
+        if (groupBlessing) groupBlessing.style.display = 'none';
+      }
+    });
   
   rsvpForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -296,7 +305,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const name = rsvpName.value.trim();
     const phone = document.getElementById('rsvp-phone').value.trim();
     const attend = rsvpAttend.value;
-    const blessing = document.getElementById('rsvp-blessing').value.trim();
+    const blessingEl = document.getElementById('rsvp-blessing');
+    const blessing = blessingEl ? blessingEl.value.trim() : '';
     
     // 1. 建立 FormData 用於傳送至 Google 表單
     const formData = new FormData();
@@ -307,7 +317,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const attendText = attend === 'yes' ? '馨香出席' : '祝賀滿滿 (不克出席)';
     formData.append('entry.1842321988', attendText);
     
-    // 對應出席人數與飲食需求
+    // 對應出席人數與備註/祝福
+    let combinedNotes = [];
     if (attend === 'yes') {
       const guestsVal = document.getElementById('rsvp-guests').value;
       let guestsText = '1人';
@@ -316,16 +327,18 @@ document.addEventListener('DOMContentLoaded', () => {
       else if (guestsVal === '4') guestsText = '4人';
       else if (guestsVal === '5') guestsText = '5人以上';
       
-      const diet = document.getElementById('rsvp-diet').value.trim();
-      
       formData.append('entry.347691862', guestsText);
-      formData.append('entry.2057224347', diet);
+      
+      const diet = document.getElementById('rsvp-diet').value.trim();
+      if (diet) combinedNotes.push(`備註：${diet}`);
     } else {
       formData.append('entry.347691862', '');
-      formData.append('entry.2057224347', '');
     }
     
-    formData.append('entry.1566488222', blessing);
+    if (blessing) combinedNotes.push(`給我們的話：${blessing}`);
+    
+    // 將備註與祝福合併傳送到同一個欄位 (2057224347)
+    formData.append('entry.2057224347', combinedNotes.join(' / '));
     
     // 2. 送出至 Google 表單 (no-cors 模式)
     fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdfwVYmMdzB_6i3ceT3kzmkTyNyYhEd_ibhX8DcWrjQ6n54ZQ/formResponse', {
@@ -343,9 +356,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. 顯示前端成功彈窗
     if (attend === 'yes') {
       const guestsVal = document.getElementById('rsvp-guests').value;
-      successMessage.innerHTML = `親愛的 <strong>${name}</strong>，<br>已為您登記 <strong>${guestsVal} 位</strong> 出席！<br>期待在婚宴上與您共同見證這份幸福 💍`;
+      successMessage.innerHTML = `親愛的 <strong>${name}</strong>，<br>已為您登記 <strong>${guestsVal} 位</strong> 出席！<br>期待婚宴當天與您相聚，共度這份幸福 💍`;
     } else {
-      successMessage.innerHTML = `親愛的 <strong>${name}</strong>，<br>已收到您的祝賀！<br>雖然您不克前往，但您的溫馨祝福我們已深深刻在心裡 🌸`;
+      successMessage.innerHTML = `親愛的 <strong>${name}</strong>，<br>已收到您無法出席的回覆，<br>謝謝您的祝福與心意 ❤️<br>期待未來有機會與您相聚！ 🌸`;
     }
     
     successModal.style.display = 'flex';
@@ -356,19 +369,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // 觸發粒子拉炮效果
     createConfettiBurst();
   });
-  
-  window.closeSuccessModal = function() {
-    successModal.classList.remove('active');
-    setTimeout(() => {
-      successModal.style.display = 'none';
-      rsvpForm.reset();
-      // 重置欄位顯示狀態
-      groupGuestsCount.style.display = 'block';
-      groupDiet.style.display = 'block';
-      // 返回第一頁封面
-      goToPage(0);
-    }, 400);
-  };
+    window.closeSuccessModal = function() {
+      successModal.classList.remove('active');
+      setTimeout(() => {
+        successModal.style.display = 'none';
+        // 將原本的表單替換為感謝文字
+        rsvpForm.innerHTML = '<div style="text-align: center; padding: 60px 0; color: var(--gold-dark); font-size: 1.3rem; font-family: var(--font-cn-serif); letter-spacing: 2px; line-height: 1.8;">已完成回覆，<br>謝謝您的心意！</div>';
+        // 依照您的要求，停留在當前頁面，不再跳回第一頁
+      }, 400);
+    };
   
   // 純前端粒子噴灑效果 (Confetti)
   function createConfettiBurst() {
