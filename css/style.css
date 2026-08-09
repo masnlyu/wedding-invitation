@@ -1400,7 +1400,7 @@ input, textarea, select {
 /* 手機版滑動提示 (右下角懸浮) */
 .swipe-hint-container {
   position: absolute;
-  bottom: 25px;
+  bottom: 10px;
   right: 25px;
   z-index: 100;
   font-size: 0.78rem;

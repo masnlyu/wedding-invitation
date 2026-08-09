@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingSection = document.getElementById('loading-section');
     
     let progress = 0;
-    const duration = 2500; // 模擬 2.5 秒的載入時間
+    const duration = 1800; // 模擬 1.8 秒的載入時間 (稍微加快)
     const interval = 30;
     const steps = duration / interval;
     const increment = 100 / steps;
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loadingSection.classList.remove('active');
             loadingSection.style.display = 'none';
           }, 800);
-        }, 200);
+        }, 600); // 在 100% 停留 0.6 秒後再開始淡出交接
       }
       
       // 更新文字
