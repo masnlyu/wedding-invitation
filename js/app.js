@@ -58,112 +58,57 @@ document.addEventListener('DOMContentLoaded', () => {
   rsvpName.value = ''; // 預設空值，由賓客自行填寫
   
   // ==========================================
-  // 計算信封內微縮卡片縮放比例與完美長寬比
+  // 3. LOADING SEQUENCE
   // ==========================================
-  function updateMiniScale() {
-    const isMobile = window.innerWidth <= 480;
+  function startLoadingSequence() {
+    const loadingPercentage = document.getElementById('loading-percentage');
+    const progressBarFill = document.getElementById('progress-bar-fill');
+    const loadingSection = document.getElementById('loading-section');
     
-    // 目標真實大小
-    const targetWidth = isMobile ? window.innerWidth : 375;
-    const targetHeight = isMobile ? window.innerHeight : 580;
+    let progress = 0;
+    const duration = 2500; // 模擬 2.5 秒的載入時間
+    const interval = 30;
+    const steps = duration / interval;
+    const increment = 100 / steps;
+    const dashOffsetMax = 340; // 圓環周長
     
-    // 固定高度，依據目標比例算出卡片的精準寬度
-    const cardHeight = isMobile ? 195 : 260;
-    const cardWidth = cardHeight * (targetWidth / targetHeight);
-    
-    // 計算置中的 left 位置
-    const envelopeWidth = isMobile ? 290 : 380;
-    const cardLeft = (envelopeWidth - cardWidth) / 2;
-    
-    // 更新 CSS 變數，讓 .env-letter 使用，確保縮放前後比例完全一致！
-    document.documentElement.style.setProperty('--card-width', `${cardWidth}px`);
-    document.documentElement.style.setProperty('--card-height', `${cardHeight}px`);
-    document.documentElement.style.setProperty('--card-left', `${cardLeft}px`);
-    
-    // 傳遞 target 尺寸給 #mini-cover-wrapper，確保它的原生大小跟真實畫面100%吻合，不會因為 100vh 產生落差
-    document.documentElement.style.setProperty('--target-width', `${targetWidth}px`);
-    document.documentElement.style.setProperty('--target-height', `${targetHeight}px`);
-    
-    // 計算所需縮放比例 (這時 scaleX 和 scaleY 會完全相等)
-    const scaleX = cardWidth / targetWidth;
-    const scaleY = cardHeight / targetHeight;
-    const miniScale = Math.max(scaleX, scaleY);
-    
-    document.documentElement.style.setProperty('--mini-scale', miniScale);
-  }
-  
-  // 初始化與視窗重設時更新比例
-  updateMiniScale();
-  window.addEventListener('resize', updateMiniScale);
-
-  // ==========================================
-  // 3. ENVELOPE OPENING & EXTRACT CARDS
-  // ==========================================
-  waxSeal.addEventListener('click', () => {
-    // 1. 火漆印章淡出
-    waxSealContainer.classList.add('fade-out');
-    
-    // 2. 嘗試播放背景音樂 (獲得使用者點擊手勢)
-    playBackgroundMusic();
-    
-    // 3. 打開信封
-    setTimeout(() => {
-      // 計算完美的滿版放大倍率與最終精準位置
-      const envelopeLetter = document.getElementById('env-letter');
-      const magBook = document.getElementById('magazine-book');
-      if (envelopeLetter && magBook) {
-        const isMobile = window.innerWidth <= 480;
-        const targetWidth = isMobile ? window.innerWidth : 375;
-        const targetHeight = isMobile ? window.innerHeight : 580;
+    const loadingTimer = setInterval(() => {
+      progress += increment;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(loadingTimer);
         
-        // 從我們剛才設定好的變數反推
-        const cardHeight = isMobile ? 195 : 260;
-        
-        // 放大的倍率就直接是目標高度 / 卡片高度
-        const targetScale = targetHeight / cardHeight;
-        document.documentElement.style.setProperty('--target-scale', targetScale);
-        
-        // 計算動畫結束時的精準座標
-        const magRect = magBook.getBoundingClientRect();
-        const cardRect = envelopeLetter.getBoundingClientRect();
-        
-        const targetCenterX = magRect.left + magRect.width / 2;
-        const targetCenterY = magRect.top + magRect.height / 2;
-        
-        const cardCenterX = cardRect.left + cardRect.width / 2;
-        const cardCenterY = cardRect.top + cardRect.height / 2;
-        
-        // X軸不變 (因為信封不會左右移動)
-        const targetX = targetCenterX - cardCenterX;
-        
-        // Y軸要注意信封本身會往下移動 150px
-        const naturalCenterY = cardCenterY + 150;
-        const targetY = targetCenterY - naturalCenterY;
-        
-        document.documentElement.style.setProperty('--target-x', `${targetX}px`);
-        document.documentElement.style.setProperty('--target-y', `${targetY}px`);
+        // 載入完成，交接至雜誌頁
+        setTimeout(() => {
+          // 淡出 Loading 畫面，並啟動 Magazine 畫面
+          loadingSection.style.transition = 'opacity 0.8s ease-in-out';
+          loadingSection.style.opacity = '0';
+          
+          magazineSection.classList.add('active');
+          updatePagesLayout();
+          
+          // 嘗試播放音樂 (若瀏覽器允許自動播放)
+          playBackgroundMusic();
+          
+          setTimeout(() => {
+            loadingSection.classList.remove('active');
+            loadingSection.style.display = 'none';
+          }, 800);
+        }, 200);
       }
       
-      envelope3D.classList.add('open');
-    }, 300);
-    
-    // 4. 信封打開後，交接至雜誌頁 (改為「瞬間切換」來解決縮放與原生渲染的殘影模糊)
-    setTimeout(() => {
-      // 暫時關閉兩者的淡入淡出動畫，執行「硬切換」(Hard Cut)
-      magazineSection.style.transition = 'none';
-      envelopeSection.style.transition = 'none';
+      // 更新文字
+      loadingPercentage.textContent = `${Math.floor(progress)}%`;
       
-      magazineSection.classList.add('active');
-      envelopeSection.classList.remove('active');
-      updatePagesLayout();
-      
-      // 切換完成後，把動畫屬性加回去，以免影響未來可能的邏輯
-      setTimeout(() => {
-        magazineSection.style.transition = '';
-        envelopeSection.style.transition = '';
-      }, 50);
-    }, 3200); // 確保卡片放大到滿版時才瞬間切換
-  });
+      // 更新橫向進度條
+      if (progressBarFill) {
+        progressBarFill.style.width = `${progress}%`;
+      }
+    }, interval);
+  }
+  
+  // 網頁載入後稍等 0.5 秒開始動畫，讓使用者準備好
+  setTimeout(startLoadingSequence, 500);
   
   // ==========================================
   // 4. MUSIC CONTROL

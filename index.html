@@ -30,49 +30,27 @@
   <!-- 主容器 (包含開箱與雜誌) -->
   <div class="app-container">
 
-    <!-- 1. 3D 信封開箱區域 (Landing & Envelope) -->
-    <section id="envelope-section" class="screen active">
-      <div class="envelope-wrapper">
-
-        <!-- 3D 信封實體 -->
-        <div class="envelope-3d show" id="envelope-3d">
-          <!-- 信封後蓋 (底層) -->
-          <div class="env-back"></div>
-          
-          <!-- 內部微縮卡片 (動態縮放第一頁DOM) -->
-          <div class="env-letter" id="env-letter">
-            <div id="mini-cover-wrapper">
-              <div class="cover-photo-container">
-                <img src="assets/cover.png" alt="" class="magazine-img">
-                <div class="cover-overlay"></div>
-              </div>
-              <div class="cover-text-content">
-                <div class="magazine-badge">Wedding Invitation</div>
-                <h1 class="couple-title">Mason & Sally</h1>
-                <div class="cover-divider"></div>
-                <p class="cover-date">2026 . 10 . 24</p>
-              </div>
-            </div>
-          </div>
-          <!-- 信封兩側摺疊蓋 -->
-          <div class="env-left"></div>
-          <div class="env-right"></div>
-          
-          <!-- 信封下摺疊蓋 -->
-          <div class="env-bottom"></div>
-          
-          <!-- 信封上摺疊蓋 (點擊開啟時往上旋轉) -->
-          <div class="env-top" id="env-top"></div>
-          
-          <!-- 火漆印章 (蓋在信封合口處) -->
-          <div class="wax-seal-container" id="wax-seal-container">
-            <div class="wax-seal" id="wax-seal">
-              <span class="seal-text">Open</span>
-            </div>
-            <div class="seal-pulse"></div>
-          </div>
+    <!-- 1. 載入動畫 (質感橫條加載) -->
+    <section id="loading-section" class="screen active">
+      <div class="loading-container">
+        <!-- 圓形插圖/照片 -->
+        <div class="loading-avatar-container">
+          <img src="assets/loading-illustration.png" alt="Loading Avatar" class="loading-avatar">
         </div>
-
+        
+        <!-- 新人名字 -->
+        <!-- <h1 class="loading-title">Mason & Sally</h1> -->
+        
+        <!-- 準備中文字 -->
+        <p class="loading-subtitle">邀請函準備中...</p>
+        
+        <!-- 橫向進度條 -->
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
+        
+        <!-- 百分比文字 -->
+        <div class="loading-text" id="loading-percentage">0%</div>
       </div>
     </section>
 
@@ -91,7 +69,7 @@
             </div>
             <div class="cover-text-content">
               <div class="magazine-badge">Wedding Invitation</div>
-              <h1 class="couple-title">Mason & Sally</h1>
+              <h1 class="couple-title">振維 & 謹瑩</h1>
               <div class="cover-divider"></div>
               <p class="cover-date">2026 . 10 . 24</p>
             </div>

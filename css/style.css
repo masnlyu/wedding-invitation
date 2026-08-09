@@ -313,327 +313,78 @@ input, textarea, select {
   transition: 0.8s ease-in-out;
 }
 
-/* 3D信封主體 */
-.envelope-3d {
-  position: relative;
-  width: 380px;
-  height: 280px;
-  background-color: var(--bg-cream-dark);
-  box-shadow: var(--shadow-premium);
-  border-radius: 4px;
-  transform-style: preserve-3d;
-  transition: var(--transition-smooth);
-  opacity: 0;
-  transform: translateY(50px) rotateX(20deg);
-  pointer-events: none;
-  z-index: 10;
-}
-
-.envelope-3d.show {
-  animation: envEntrance 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  pointer-events: auto;
-}
-
-.envelope-3d.open {
-  animation:none;
-  transform: translateY(100px) rotateX(0deg);
-  opacity: 1;
-  pointer-events: auto;
-  /* 加入下面這行：控制平滑移動 */
-animation: slowMoveDown 1s ease-in-out forwards;
-}
-
-@keyframes envEntrance {
-  0% {
-    opacity: 0;
-    transform: translateY(40px) rotateX(15deg);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) rotateX(0deg);
-  }
-}
-
-@keyframes slowMoveDown {
-  0% {
-    transform: translateY(0) rotateX(0deg);
-  }
-  100% {
-    transform: translateY(150px) rotateX(0deg);
-  }
-}
-
-/* 信封各摺邊 */
-.env-back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #e5dac9;
-  border-radius: 4px;
-  z-index: 1;
-  transform: translateZ(-5px);
-}
-
-.env-left {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-top: 140px solid transparent;
-  border-bottom: 140px solid transparent;
-  border-left: 190px solid #f2e7d7;
-  border-radius: 4px 0 0 4px;
-  z-index: 5;
-  transform: translateZ(1px);
-}
-
-.env-right {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-top: 140px solid transparent;
-  border-bottom: 140px solid transparent;
-  border-right: 190px solid #ecdcc8;
-  border-radius: 0 4px 4px 0;
-  z-index: 5;
-  transform: translateZ(1px);
-}
-
-.env-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-left: 190px solid transparent;
-  border-right: 190px solid transparent;
-  border-bottom: 140px solid #ebdcb7;
-  border-radius: 0 0 4px 4px;
-  z-index: 6;
-  transform: translateZ(2px);
-}
-
-/* 信封上摺蓋 (向外旋轉) */
-.env-top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-left: 190px solid transparent;
-  border-right: 190px solid transparent;
-  border-top: 140px solid #d9c8ac;
-  border-radius: 4px 4px 0 0;
-  transform-origin: top center;
-  transform: translateZ(3px) rotateX(0deg);
-  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s 0.8s;
-  z-index: 7;
-}
-
-.envelope-3d.open .env-top {
-  transform: translateZ(-2px) rotateX(180deg);
-  z-index: 2; /* 旋轉開後放到信封後方，z-index變化會有延遲 */
-  border-top-color: #ecdcc8;
-}
-
-/* 火漆印章 */
-.wax-seal-container {
-  position: absolute;
-  top: 125px;
-  left: 162.5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  z-index: 15;
-  transform: translateZ(4px);
-  transition: opacity 0.5s ease;
-}
-
-.wax-seal-container.fade-out {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.wax-seal {
-  width: 55px;
-  height: 55px;
-  background-color: var(--wax-red);
-  border-radius: 50%;
+/* ==========================================================================
+   5. LOADING SECTION
+   ========================================================================== */
+#loading-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2),
-              inset -4px -4px 10px rgba(0,0,0,0.3),
-              inset 4px 4px 10px rgba(255,255,255,0.25);
-  border: 1px solid rgba(155, 28, 49, 0.2);
-  transition: transform 0.2s ease;
+  background: var(--bg-cream-light);
 }
 
-.wax-seal:hover {
-  transform: scale(1.05);
-}
-
-.seal-text {
-  font-family: var(--font-en-cursive);
-  font-size: 1.4rem;
-  color: var(--white-pure);
-  opacity: 0.9;
-  user-select: none;
-  margin-top: -3px;
-}
-
-.seal-pulse {
-  position: absolute;
-  top: 0;
-  left: 0px;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  border: 2px solid var(--wax-red);
-  opacity: 0;
-  animation: pulse-ring 2.5s infinite;
-  pointer-events: none;
-}
-
-@keyframes pulse-ring {
-  0% {
-    transform: scale(0.95);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-}
-
-.seal-tip {
-  margin-top: 8px;
-  font-size: 0.75rem;
-  color: var(--text-olive);
-  letter-spacing: 1px;
-  white-space: nowrap;
-  opacity: 0.85;
-}
-
-/* 信內卡片 (雜誌預覽) */
-.env-letter {
-  position: absolute;
-  top: 10px;
-  left: var(--card-left, 90px);
-  width: var(--card-width, 200px);
-  height: var(--card-height, 260px);
-  background-color: var(--white-pure);
-  border-radius: 3px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  z-index: 3;
-  transform: translate3d(0, 0, 0);
-  transition: opacity 0.1s ease;
-  overflow: hidden;
-  opacity: 0; /* 預設隱藏，避免從信封接縫漏出邊緣 */
-}
-
-#mini-cover-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: var(--target-width, 375px);
-  height: var(--target-height, 580px);
-  transform: translate(-50%, -50%) scale(var(--mini-scale, 0.2));
-  transform-origin: center center;
-  pointer-events: none;
-}
-
-/* 原本的 letter-front-preview 等相關樣式保留或可刪除，這裡為求穩定先保留 */
-.letter-front-preview {
-  padding: 30px 25px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  background-image: var(--shadow-inset);
-}
-
-.gold-decor-border {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  border: 1px solid rgba(197, 160, 89, 0.35);
-  pointer-events: none;
-}
-
-.letter-title {
-  font-family: var(--font-en-serif);
-  font-size: 1.25rem;
-  letter-spacing: 3px;
-  color: var(--gold-dark);
-  text-transform: uppercase;
-}
-
-.salutation-box {
+.loading-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 15px 0;
+  justify-content: center;
   width: 80%;
-  border-top: 1px dashed rgba(197, 160, 89, 0.2);
-  border-bottom: 1px dashed rgba(197, 160, 89, 0.2);
-  padding: 15px 0;
+  max-width: 400px;
 }
 
-.salute-label, .salute-suffix {
-  font-size: 0.7rem;
-  color: var(--text-olive);
-  letter-spacing: 2px;
+.loading-avatar-container {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.salute-name {
-  font-size: 1.3rem;
-  font-weight: 600;
+.loading-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 確保手繪圖完整顯示 */
+}
+
+.loading-title {
+  font-family: var(--font-en-serif);
+  font-size: 2.2rem;
   color: var(--text-charcoal);
   letter-spacing: 2px;
-  border-bottom: 1px solid var(--gold-primary);
-  padding: 2px 12px;
-  margin: 5px 0;
+  margin-bottom: 12px;
 }
 
-/* 抽出卡片並覆蓋全螢幕的動畫狀態 */
-.envelope-3d.open .env-letter {
-  opacity: 1; /* 信封一打開就立刻顯示內容物 */
-  animation: extractLetter 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  animation-delay: 1s;
+.loading-subtitle {
+  font-size: 0.95rem;
+  color: #777;
+  letter-spacing: 4px;
+  margin-bottom: 30px;
+  margin-left: 4px; /* 對齊 letter-spacing */
 }
 
-@keyframes extractLetter {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-    z-index: 3;
-    opacity: 1;
-  }
-  45% {
-    transform: translate3d(0, -250px, 0) scale(1);
-    z-index: 3;
-    opacity: 1;
-  }
-  55% {
-    transform: translate3d(0, -250px, 10px) scale(1);
-    z-index: 100;
-    opacity: 1;
-  }
-  100% {
-    transform: translate3d(var(--target-x, 0px), var(--target-y, -150px), 10px) scale(var(--target-scale, 3.5));
-    z-index: 100;
-    opacity: 1;
-  }
+.progress-bar-container {
+  width: 100%;
+  height: 4px;
+  background-color: rgba(155, 28, 49, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.progress-bar-fill {
+  width: 0%;
+  height: 100%;
+  background-color: var(--wax-red); /* 參考圖使用了深紅色/火漆紅 */
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+.loading-text {
+  font-family: var(--font-en-serif);
+  font-size: 0.9rem;
+  color: #999;
+  letter-spacing: 2px;
 }
 
 /* ==========================================================================
@@ -1678,85 +1429,6 @@ animation: slowMoveDown 1s ease-in-out forwards;
    9. MEDIA QUERIES (RESPONSIVENESS)
    ========================================================================== */
 @media (max-width: 480px) {
-  .envelope-3d {
-    width: 290px;
-    height: 215px;
-  }
-  
-  .env-letter {
-    width: var(--card-width, 150px);
-    height: var(--card-height, 195px);
-    left: var(--card-left, 70px);
-    top: 10px;
-  }
-  
-  .env-left {
-    border-top: 107.5px solid transparent;
-    border-bottom: 107.5px solid transparent;
-    border-left: 145px solid #f2e7d7;
-  }
-  
-  .env-right {
-    border-top: 107.5px solid transparent;
-    border-bottom: 107.5px solid transparent;
-    border-right: 145px solid #ecdcc8;
-  }
-  
-  .env-bottom {
-    border-left: 145px solid transparent;
-    border-right: 145px solid transparent;
-    border-bottom: 107.5px solid #ebdcb7;
-  }
-  
-  .env-top {
-    border-left: 145px solid transparent;
-    border-right: 145px solid transparent;
-    border-top: 107.5px solid #d9c8ac;
-  }
-  
-  .wax-seal-container {
-    top: 85px;
-    left: 120px;
-  }
-  
-  .salutation-box {
-    padding: 10px 0;
-    margin: 10px 0;
-  }
-  
-  .salute-name {
-    font-size: 1.1rem;
-    padding: 1px 8px;
-  }
-  
-  .letter-title {
-    font-size: 1.05rem;
-    letter-spacing: 2px;
-  }
-  
-  @keyframes extractLetter {
-    0% {
-      transform: translate3d(0, 0, 0) scale(1);
-      z-index: 3;
-      opacity: 1;
-    }
-    45% {
-      transform: translate3d(0, -250px, 0) scale(1);
-      z-index: 3;
-      opacity: 1;
-    }
-    55% {
-      transform: translate3d(0, -250px, 10px) scale(1);
-      z-index: 100;
-      opacity: 1;
-    }
-    100% {
-      transform: translate3d(var(--target-x, 0px), var(--target-y, -150px), 10px) scale(var(--target-scale, 2.8));
-      z-index: 100;
-      opacity: 1;
-    }
-  }
-  
   /* 雜誌調整 - 手機版滿版 */
   .magazine-viewport {
     padding: 0;
