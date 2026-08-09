@@ -5,23 +5,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // 1. DOM ELEMENTS
   // ==========================================
-  const envelopeSection = document.getElementById('envelope-section');
   const magazineSection = document.getElementById('magazine-section');
-  
-  const envelope3D = document.getElementById('envelope-3d');
-  const coverGuestName = document.getElementById('cover-guest-name');
-  const waxSealContainer = document.getElementById('wax-seal-container');
-  const waxSeal = document.getElementById('wax-seal');
-  
   const bgMusic = document.getElementById('bg-music');
-  if (bgMusic) {
-    if (isMobile) {
-      bgMusic.remove(); // 手機版移除音樂標籤以防請求與播放限制
-    } else {
+  const btnMusicToggle = document.getElementById('btn-music-toggle');
+  
+  if (isMobile) {
+    if (bgMusic) bgMusic.remove(); // 手機版移除音樂標籤以防請求與播放限制
+    if (btnMusicToggle) btnMusicToggle.style.display = 'none'; // 手機版隱藏音樂按鈕
+  } else {
+    if (bgMusic) {
+      bgMusic.src = "assets/eternal_vows.webm";
       bgMusic.volume = 0.18; // 設置背景音樂音量為 18% (柔和背景音)
     }
   }
-  const btnMusicToggle = document.getElementById('btn-music-toggle');
   
   const magazineBook = document.getElementById('magazine-book');
   const pages = Array.from(document.querySelectorAll('.magazine-page'));
@@ -52,13 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const guestNameParam = urlParams.get('name') || urlParams.get('to') || '貴賓';
   guestName = guestNameParam;
-  if (coverGuestName) {
-    coverGuestName.textContent = guestName;
-  }
+  
   rsvpName.value = ''; // 預設空值，由賓客自行填寫
   
   // ==========================================
-  // 3. LOADING SEQUENCE
+  // 3. LOADING SEQUENCE (Fake Timer)
   // ==========================================
   function startLoadingSequence() {
     const loadingPercentage = document.getElementById('loading-percentage');
@@ -66,11 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingSection = document.getElementById('loading-section');
     
     let progress = 0;
-    const duration = 1800; // 模擬 1.8 秒的載入時間 (稍微加快)
+    const duration = 2000; // 模擬 2.0 秒的載入時間
     const interval = 30;
     const steps = duration / interval;
     const increment = 100 / steps;
-    const dashOffsetMax = 340; // 圓環周長
     
     const loadingTimer = setInterval(() => {
       progress += increment;
@@ -80,34 +73,32 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 載入完成，交接至雜誌頁
         setTimeout(() => {
-          // 淡出 Loading 畫面，並啟動 Magazine 畫面
-          loadingSection.style.transition = 'opacity 0.8s ease-in-out';
+          loadingSection.style.transition = 'opacity 1s ease-in-out';
           loadingSection.style.opacity = '0';
           
           magazineSection.classList.add('active');
           updatePagesLayout();
           
-          // 嘗試播放音樂 (若瀏覽器允許自動播放)
           playBackgroundMusic();
           
           setTimeout(() => {
             loadingSection.classList.remove('active');
             loadingSection.style.display = 'none';
-          }, 800);
-        }, 600); // 在 100% 停留 0.6 秒後再開始淡出交接
+          }, 1000);
+        }, 500); // 100% 後稍微停留 0.5 秒
       }
       
-      // 更新文字
-      loadingPercentage.textContent = `${Math.floor(progress)}%`;
-      
-      // 更新橫向進度條
+      // 更新文字與進度條
+      if (loadingPercentage) {
+        loadingPercentage.textContent = `${Math.floor(progress)}%`;
+      }
       if (progressBarFill) {
         progressBarFill.style.width = `${progress}%`;
       }
     }, interval);
   }
   
-  // 網頁載入後稍等 0.5 秒開始動畫，讓使用者準備好
+  // 網頁載入後稍等 0.2 秒開始動畫
   setTimeout(startLoadingSequence, 500);
   
   // ==========================================
