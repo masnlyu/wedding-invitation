@@ -460,7 +460,7 @@ input, textarea, select {
 }
 
 .cover-text-content {
-  padding: 30px;
+  padding: 35px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -470,18 +470,18 @@ input, textarea, select {
 
 .magazine-badge {
   font-family: var(--font-en-serif);
-  font-size: 0.75rem;
+  /* font-size: 0.75rem; */
   letter-spacing: 5px;
   color: var(--gold-dark);
   border: 1px solid var(--gold-primary);
   padding: 3px 12px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   border-radius: 20px;
 }
 
 .couple-title {
   font-family: var(--font-en-serif); /* 採用與第四頁 TO THE WEDDING 相同的 Cinzel 襯線字型 */
-  font-size: 1.5rem; /* 模型精心設計的黃金比例尺寸，呈現高雅大方比例 */
+  font-size: 1.6rem; /* 模型精心設計的黃金比例尺寸，呈現高雅大方比例 */
   font-weight: 600; /* 與 TO THE WEDDING 相同的半粗體字重 */
   letter-spacing: 6px; /* 寬體字母間距，極具現代畫報高級質感 */
   text-indent: 6px; /* 對齊首尾縮排，防止視覺偏右 */
@@ -491,15 +491,15 @@ input, textarea, select {
 }
 
 .cover-divider {
-  width: 40px;
-  height: 1.5px;
+  width: 50px;
+  height: 2px;
   background-color: var(--gold-primary);
   margin-bottom: 15px;
 }
 
 .cover-date {
   font-family: var(--font-en-serif);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   letter-spacing: 2px;
   color: var(--text-olive);
 }
@@ -1330,7 +1330,7 @@ input, textarea, select {
   }
   
   .couple-title {
-    font-size: 1.35rem; /* 手機版全大寫寬體間距黃金比例尺寸 */
+    font-size: 1.6rem; /* 手機版全大寫寬體間距黃金比例尺寸 */
     letter-spacing: 4px;
     text-indent: 4px;
   }
