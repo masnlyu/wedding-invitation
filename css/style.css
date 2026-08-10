@@ -540,7 +540,7 @@ input, textarea, select {
   font-family: var(--font-en-cursive);
   font-size: 2rem;
   color: var(--gold-dark);
-  margin: 20px 0; /* 上下皆間隔 20px */
+  margin: 10px 0; /* 上下皆間隔 20px */
   text-align: center;
   line-height: 0.5;
   letter-spacing: 2px;
@@ -583,7 +583,7 @@ input, textarea, select {
 
 .prologue-content {
   width: 100%;
-  margin-top: 15px;
+  margin-top: 10px;
   padding: 0 15px;
   text-align: center; /* 居中對齊 */
 }
@@ -609,7 +609,7 @@ input, textarea, select {
   line-height: 1.75;
   color: var(--text-olive);
   letter-spacing: 1px;
-  margin-bottom: 6px;
+  /* margin-bottom: 6px; */
 }
 
 .story-line-gap {
@@ -1280,6 +1280,22 @@ input, textarea, select {
    9. MEDIA QUERIES (RESPONSIVENESS)
    ========================================================================== */
 @media (max-width: 480px) {
+  .prologue-subquote {
+  font-family: var(--font-en-cursive);
+  font-size: 2rem;
+  color: var(--gold-dark);
+  margin: 15px 0; /* 上下皆間隔 20px */
+  text-align: center;
+  line-height: 0.5;
+  letter-spacing: 2px;
+}
+.story-line{
+    font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text-olive);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
   /* 雜誌調整 - 手機版滿版 */
   .magazine-viewport {
     padding: 0;
@@ -1350,7 +1366,7 @@ input, textarea, select {
   }
   
   .prologue-content {
-    margin-top: 10px;
+    margin-top: 15px;
     padding: 0 5px;
   }
   
