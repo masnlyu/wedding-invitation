@@ -592,14 +592,14 @@ input, textarea, select {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-charcoal);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   letter-spacing: 2px;
   text-align: center;
 }
 
 .story-paragraphs {
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
   align-items: center; /* 居中對齊 */
   text-align: center;
 }
