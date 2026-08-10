@@ -101,7 +101,8 @@
             </div>
             
             <div class="prologue-content">
-              <p class="prologue-subquote">join us as we begin our forever</p>
+              <p class="prologue-subquote">Join us as we begin our</p>
+              <p class="prologue-subquote">next chapter.</p>
               <h2 class="prologue-greet">嗨</h2>
               <div class="story-paragraphs">
                 <p class="story-line">我們想把最重要的一天，</p>
@@ -142,11 +143,11 @@
               </div>
             </div>
             
-            <div class="calendar-month">2026.10月</div>
+            <div class="calendar-month" style="color: #9F7E3B;">2026.10月</div>
             
             <div class="calendar-table">
               <div class="cal-header-row">
-                <span class="sun">Sun</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span class="sat">Sat</span>
+                <span class="sun">Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span class="sat">Sat</span>
               </div>
               <div class="cal-grid-row">
                 <span class="empty"></span>
@@ -183,7 +184,7 @@
                 <span>22</span>
                 <span>23</span>
                 <span class="special-date sat">
-                  <span class="day-num">24</span>
+                  <span class="day-num" style="font-weight:bold;">24</span>
                   <svg class="heart-svg" viewBox="0 0 32 32">
                     <path d="M16,28.261l-2.146-1.955C6.239,19.352,1,14.609,1,8.739C1,3.957,4.783,1,9.565,1C12.27,1,14.865,2.257,16,4.248 C17.135,2.257,19.73,1,22.435,1C27.217,1,31,3.957,31,8.739c0,5.87-5.239,10.613-12.854,17.581L16,28.261z" fill="none" stroke="#9B1C31" stroke-width="2"/>
                   </svg>
@@ -204,33 +205,38 @@
           <!-- 頁面 4: 宴席與地圖 (照上傳圖片調整) -->
           <article class="magazine-page map-page" data-page="4">
             <div class="map-header">
-              <div class="welcome-cursive" style="padding-top: 20px;">Welcome</div>
-              <div class="welcome-sub">TO THE WEDDING OF</div>
+              <div class="hotel-title" style="padding-top: 20px;color: #9F7E3B;font-size: 26px; ">朝著幸福出發</div>
+              <div class="welcome-sub">PARKING & TRANSPORTATION</div>
             </div>
-            
+            <!--  style="display: flex; width: 100%; aspect-ratio: 1053 / 648; margin: 15px 0; border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05); border: 1px solid rgba(197, 160, 89, 0.12); background-color: var(--bg-cream-dark); cursor: pointer;" -->
             <!-- 點擊地圖可觸發全螢幕放大檢視 (使用行內樣式，徹底避免瀏覽器快取 CSS 的問題) -->
-            <div class="map-row-container" style="display: flex; width: 100%; aspect-ratio: 1053 / 648; margin: 15px 0; border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05); border: 1px solid rgba(197, 160, 89, 0.12); background-color: var(--bg-cream-dark); cursor: pointer;" onclick="openLightbox('assets/MAP.png')">
-              <img src="assets/MAP.png" alt="交通資訊地圖" class="map-combined-img" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+            <div class="map-row-container" style="position: relative; width: 100%; border: 1px solid #9F7E3B; height: 189px; overflow: hidden;" onclick="openLightbox('assets/MAP.png')">
+              <img src="assets/MAP.png" alt="交通資訊地圖" class="map-combined-img" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
               <div class="map-zoom-hint">🔍 點擊放大地圖</div>
             </div>
             
-            <div class="map-footer">
-              <div class="couple-names-cursive" style="padding-top: 24px; padding-bottom: 20px;">Mason <span>and</span> Sally</div>
-                <div class="hotel-title" style="padding-bottom: 10px; font-size: 20px;">天圓地方 婚宴會館</div>
-                <div class="hotel-title" style="font-size: 26px; padding-bottom: 10px;">軒 頤 廳</div>
-                <div class="hotel-title" style="font-size: 26px; padding-bottom: 10px;">12:00 PM</div>
-                <div class="hotel-address" style="font-size: 14px;">台中市東區復興路四段186號11F</div>
+            <div class="map-footer" style="padding-top: 20px;">
+              <!-- <div class="couple-names-cursive" style="padding-top: 24px; padding-bottom: 20px;">Mason <span>and</span> Sally</div> -->
+                <div class="hotel-title" style="padding-bottom: 10px; font-size: 20px; ">天圓地方 婚宴會館</div>
+                <div class="hotel-title" style="font-size: 26px; padding-bottom: 10px; color: #9F7E3B;">軒 頤 廳</div>
+                <div class="hotel-title" style="font-size: 20px; padding-bottom: 10px;">入席時間 11:30 AM</div>
+                <div class="hotel-title" style="font-size: 20px; padding-bottom: 10px;">開席時間 12:00 PM</div>
+                <div class="hotel-address" style="font-size: 14px;">台中市東區復興路四段186號11樓</div>
             </div>
           </article>
 
           <!-- 頁面 5: RSVP 出席調查表單 (版型不變) -->
-          <article class="magazine-page rsvp-page" data-page="5" style="padding: 40px 30px;">
-            <h2 class="page-title">出席調查表單</h2>
+          <article class="magazine-page rsvp-page" data-page="5" style="padding: 30px 30px;">
+                        <div class="map-header">
+              <div class="hotel-title" style="padding-top: 20px;color: #9F7E3B;font-size: 26px; ">幸福邀請函</div>
+              <div class="welcome-sub">Wedding Attendance Form</div>
+            </div>
+            <!-- <h2 class="page-title" style="color: #9F7E3B;">幸福邀請函</h2> -->
             <form id="rsvp-form" class="rsvp-form">
               
               <div class="form-group">
                 <input type="text" id="rsvp-name" required placeholder=" ">
-                <label for="rsvp-name">您的姓名</label>
+                <label for="rsvp-name">你的姓名</label>
               </div>
               
               <div class="form-group">
@@ -302,8 +308,8 @@
     <!-- 4. RSVP 送出成功 & 金色拉炮特效 -->
     <div id="success-modal" class="success-modal">
       <div class="success-card">
-        <div class="success-icon">🌸</div>
-        <h2>感謝您的回覆！</h2>
+        <div class="success-icon">🤵👰</div>
+        <h2>感謝你的回覆！</h2>
         <p id="success-message">您的出席與祝福已深深刻在我們心中</p>
         <button onclick="closeSuccessModal()" class="btn-gold">確定</button>
       </div>

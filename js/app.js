@@ -356,9 +356,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. 顯示前端成功彈窗
     if (attend === 'yes') {
       const guestsVal = document.getElementById('rsvp-guests').value;
-      successMessage.innerHTML = `親愛的 <strong>${name}</strong>，<br>已為您登記 <strong>${guestsVal} 位</strong> 出席！<br>期待婚宴當天與您相聚，共度這份幸福 💍`;
+      successMessage.innerHTML = `親愛的 <strong>${name}</strong>，<br>已為你登記 <strong>${guestsVal} 位</strong> 出席！<br>期待婚宴當天與你相聚，共度這份幸福 💍`;
     } else {
-      successMessage.innerHTML = `親愛的 <strong>${name}</strong>，<br>已收到您無法出席的回覆，<br>謝謝您的祝福與心意 ❤️<br>期待未來有機會與您相聚！ 🌸`;
+      successMessage.innerHTML = `親愛的 <strong>${name}</strong>，<br>已收到你無法出席的回覆，<br>謝謝你的祝福與心意 ❤️<br>期待未來有機會與你相聚！ 🌸`;
     }
     
     successModal.style.display = 'flex';
@@ -374,8 +374,8 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         successModal.style.display = 'none';
         // 將原本的表單替換為感謝文字
-        rsvpForm.innerHTML = '<div style="text-align: center; padding: 60px 0; color: var(--gold-dark); font-size: 1.3rem; font-family: var(--font-cn-serif); letter-spacing: 2px; line-height: 1.8;">已完成回覆，<br>謝謝您的心意！</div>';
-        // 依照您的要求，停留在當前頁面，不再跳回第一頁
+        rsvpForm.innerHTML = '<div style="text-align: center; padding: 60px 0; color: var(--gold-dark); font-size: 1.3rem; font-family: var(--font-cn-serif); letter-spacing: 2px; line-height: 1.8;">已完成回覆，<br>謝謝你的心意！</div>';
+        // 依照你的要求，停留在當前頁面，不再跳回第一頁
       }, 400);
     };
   
