@@ -240,14 +240,14 @@
               </div>
               
               <div class="form-group">
-                <input type="tel" id="rsvp-phone" required placeholder=" ">
+                <input type="number" id="rsvp-phone" required placeholder=" ">
                 <label for="rsvp-phone">聯絡電話</label>
               </div>
 
               <div class="form-row">
                 <div class="form-group half">
                   <select id="rsvp-attend" required>
-                    <option value="" disabled selected hidden></option>
+                    <!-- <option value="" disabled selected hidden></option> -->
                     <option value="yes">出席</option>
                     <option value="no">祝賀滿滿 (不克出席)</option>
                   </select>
@@ -311,7 +311,7 @@
         <div class="success-icon">🤵👰</div>
         <h2>感謝你的回覆！</h2>
         <p id="success-message">您的出席與祝福已深深刻在我們心中</p>
-        <button onclick="closeSuccessModal()" class="btn-gold">確定</button>
+        <button onclick="closeSuccessModal()" class="btn-gold btn">確定</button>
       </div>
     </div>
 
