@@ -934,7 +934,7 @@ input, textarea, select {
 
 .hotel-title {
   font-size: 1.1rem;
-  font-weight: 600;
+  /* font-weight: 600; */
   letter-spacing: 2px;
   text-indent: 2px;
   color: var(--text-charcoal);
