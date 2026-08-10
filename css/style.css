@@ -499,7 +499,7 @@ input, textarea, select {
 
 .cover-date {
   font-family: var(--font-en-serif);
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   letter-spacing: 2px;
   color: var(--text-olive);
 }
@@ -538,7 +538,7 @@ input, textarea, select {
 /* 序言頁面新增金色草寫英文字 */
 .prologue-subquote {
   font-family: var(--font-en-cursive);
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: var(--gold-dark);
   margin: 20px 0; /* 上下皆間隔 20px */
   text-align: center;
@@ -573,7 +573,7 @@ input, textarea, select {
 
 .arch-name {
   font-family: var(--font-en-serif);
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-charcoal);
   margin-top: 10px;
@@ -589,7 +589,7 @@ input, textarea, select {
 }
 
 .prologue-greet {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-charcoal);
   margin-bottom: 15px;
@@ -605,7 +605,7 @@ input, textarea, select {
 }
 
 .story-line {
-  font-size: 0.88rem;
+  font-size: 1rem;
   line-height: 1.75;
   color: var(--text-olive);
   letter-spacing: 1px;
@@ -617,7 +617,7 @@ input, textarea, select {
 }
 
 .story-line-bold {
-  font-size: 1.3rem; /* 調整為與 嗨 同大小 */
+  font-size: 1.5rem; /* 調整為與 嗨 同大小 */
   font-weight: 600;
   color: var(--text-charcoal);
   letter-spacing: 2px;
@@ -776,7 +776,7 @@ input, textarea, select {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.82rem;
+  font-size: 1rem;
   text-align: center;
   position: relative;
 }
@@ -784,7 +784,7 @@ input, textarea, select {
 .cal-header-row span {
   font-weight: 600;
   color: #a09d98;
-  font-size: 0.75rem;
+  font-size: 1rem;
 }
 
 .cal-grid-row {
@@ -846,7 +846,7 @@ input, textarea, select {
 
 .map-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .welcome-cursive {
@@ -990,7 +990,7 @@ input, textarea, select {
 
 .rsvp-form label {
   color: #777;
-  font-size: 0.9rem;
+  font-size: 1rem;
   position: absolute;
   pointer-events: none;
   left: 5px;
@@ -1418,6 +1418,6 @@ input, textarea, select {
   
   .btn-gold-submit {
     padding: 10px;
-    font-size: 0.85rem;
+    font-size:1em;
   }
 }
