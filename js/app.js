@@ -283,21 +283,56 @@ document.addEventListener('DOMContentLoaded', () => {
   // 8. RSVP FORM INTERACTIONS & CONFETTI
   // ==========================================
     const groupBlessing = document.getElementById('group-blessing');
+    const groupChildrenRow = document.getElementById('group-children-row');
+    const rsvpChildren = document.getElementById('rsvp-children');
+    const groupBabyChair = document.getElementById('group-baby-chair');
     
-    // 初始化隱藏祝福欄位
+    // 初始化隱藏祝福欄位 (一開始預設不顯示，直到選了不克出席)
     if (groupBlessing) groupBlessing.style.display = 'none';
     
     rsvpAttend.addEventListener('change', (e) => {
       if (e.target.value === 'no') {
         groupGuestsCount.style.display = 'none';
+        if (groupChildrenRow) groupChildrenRow.style.display = 'none';
         if (groupDiet) groupDiet.style.display = 'none';
         if (groupBlessing) groupBlessing.style.display = 'block';
       } else {
         groupGuestsCount.style.display = 'block';
+        if (groupChildrenRow) groupChildrenRow.style.display = 'flex';
         if (groupDiet) groupDiet.style.display = 'block';
         if (groupBlessing) groupBlessing.style.display = 'none';
       }
     });
+    
+    // 兒童人數變更時的處理
+    if (rsvpChildren && groupBabyChair) {
+      rsvpChildren.addEventListener('change', (e) => {
+        const numChildren = parseInt(e.target.value, 10);
+        const babyChairSelect = document.getElementById('rsvp-baby-chair');
+        
+        if (numChildren === 0) {
+          groupBabyChair.style.display = 'none';
+          babyChairSelect.innerHTML = '<option value="0" selected>0 張</option>'; // reset
+        } else {
+          groupBabyChair.style.display = 'block';
+          // 重新產生選項，最多不超過兒童數量
+          const currentChairVal = parseInt(babyChairSelect.value, 10) || 0;
+          babyChairSelect.innerHTML = '';
+          for (let i = 0; i <= numChildren; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = `${i} 張`;
+            if (i === currentChairVal && currentChairVal <= numChildren) {
+              option.selected = true;
+            } else if (i === 0 && currentChairVal > numChildren) {
+              // 如果原本選的數量大於現在的兒童數，重設為 0
+              option.selected = true;
+            }
+            babyChairSelect.appendChild(option);
+          }
+        }
+      });
+    }
   
   rsvpForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -321,11 +356,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let combinedNotes = [];
     if (attend === 'yes') {
       const guestsVal = document.getElementById('rsvp-guests').value;
-      let guestsText = '1人';
-      if (guestsVal === '2') guestsText = '2人';
-      else if (guestsVal === '3') guestsText = '3人';
-      else if (guestsVal === '4') guestsText = '4人';
-      else if (guestsVal === '5') guestsText = '5人以上';
+      const childrenVal = document.getElementById('rsvp-children') ? document.getElementById('rsvp-children').value : '0';
+      const chairVal = document.getElementById('rsvp-baby-chair') ? document.getElementById('rsvp-baby-chair').value : '0';
+      
+      let adultsText = guestsVal === '5' ? '5人以上' : `${guestsVal}人`;
+      let childrenText = childrenVal === '0' ? '' : ` / 兒童:${childrenVal}人`;
+      let chairText = (childrenVal !== '0' && chairVal !== '0') ? `(需${chairVal}張兒童椅)` : '';
+      
+      let guestsText = `大人:${adultsText}${childrenText}${chairText}`;
       
       formData.append('entry.347691862', guestsText);
       
@@ -356,7 +394,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. 顯示前端成功彈窗
     if (attend === 'yes') {
       const guestsVal = document.getElementById('rsvp-guests').value;
-      successMessage.innerHTML = `親愛的 <strong>${name}</strong>，<br>已為你登記 <strong>${guestsVal} 位</strong> 出席！<br>期待婚宴當天與你相聚，共度這份幸福 💍`;
+      const childrenVal = document.getElementById('rsvp-children') ? document.getElementById('rsvp-children').value : '0';
+      
+      let adultsText = guestsVal === '5' ? '5位以上大人' : `${guestsVal}位大人`;
+      let childrenText = childrenVal === '0' ? '' : `，${childrenVal}位兒童`;
+      
+      successMessage.innerHTML = `親愛的 <strong>${name}</strong>，<br>已為你登記 <strong>${adultsText}${childrenText}</strong> 出席！<br>期待婚宴當天與你相聚，共度這份幸福 💍`;
     } else {
       successMessage.innerHTML = `親愛的 <strong>${name}</strong>，<br>已收到你無法出席的回覆，<br>謝謝你的祝福與心意 ❤️<br>期待未來有機會與你相聚！ 🌸`;
     }

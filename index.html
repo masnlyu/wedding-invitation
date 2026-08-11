@@ -261,7 +261,31 @@
                     <option value="4">4 人</option>
                     <option value="5">5 人以上</option>
                   </select>
-                  <label for="rsvp-guests">出席人數</label>
+                  <label for="rsvp-guests">出席大人數</label>
+                </div>
+              </div>
+              
+              <!-- 新增：兒童人數與兒童椅需求 (漸進式顯示) -->
+              <div class="form-row" id="group-children-row">
+                <div class="form-group half" id="group-children-count">
+                  <select id="rsvp-children">
+                    <option value="0" selected>0 人</option>
+                    <option value="1">1 人</option>
+                    <option value="2">2 人</option>
+                    <option value="3">3 人</option>
+                    <option value="4">4 人</option>
+                  </select>
+                  <label for="rsvp-children">兒童/嬰兒數</label>
+                </div>
+                
+                <div class="form-group half" id="group-baby-chair" style="display: none;">
+                  <select id="rsvp-baby-chair">
+                    <option value="0" selected>0 張</option>
+                    <option value="1">1 張</option>
+                    <option value="2">2 張</option>
+                    <option value="3">3 張</option>
+                  </select>
+                  <label for="rsvp-baby-chair">需要兒童椅</label>
                 </div>
               </div>
 
@@ -318,6 +342,6 @@
   </div>
 
   <!-- JavaScript -->
-  <script src="js/app.js?v=20260803_2306"></script>
+  <script src="js/app.js?v=20260812_0031"></script>
 </body>
 </html>
