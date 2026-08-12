@@ -251,6 +251,14 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // 支援鍵盤左右鍵翻頁
   document.addEventListener('keydown', (e) => {
+    const activeElement = event.target;
+    const isInputArea = activeElement.tagName === 'INPUT' || 
+                        activeElement.tagName === 'TEXTAREA' || 
+                        activeElement.tagName === 'SELECT' ||
+                        activeElement.isContentEditable;
+    if (isInputArea) {
+        return; 
+    }
     if (magazineSection.classList.contains('active')) {
       if (e.key === 'ArrowRight') {
         goToPage(currentPageIndex + 1);

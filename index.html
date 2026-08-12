@@ -240,7 +240,7 @@
               </div>
               
               <div class="form-group">
-                <input type="number" id="rsvp-phone" required placeholder=" ">
+                <input type="text" id="rsvp-phone" inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required placeholder=" ">
                 <label for="rsvp-phone">聯絡電話</label>
               </div>
 
